@@ -15,7 +15,7 @@
 			<div class="card-body">
 				<h4 class="card-title">Health Care Provider Services</h4>
 				<form class="forms-sample" action="<?= ADMIN_URL ?>hcp-services" method="post">
-					<input type="hidden" name="type" value='retail'>
+					
 					<div class="form-group d-flex">
 						<div class="col-3"><label>Enter Service</label><input name="hcp_service" type="text" class="form-control" required></div>
 						<div class="col-6" style="margin-left:15px;"><button name="add_hcp_service_btn" type="submit" class="btn btn-success btn-rounded btn-fw">Add</button></div>

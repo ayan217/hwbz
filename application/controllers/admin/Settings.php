@@ -117,7 +117,7 @@ class Settings extends CI_Controller
 			$this->session->set_flashdata('log_err', 'Something Went Wrong !!');
 		}
 	}
-		public function hourly_rates()
+	public function hourly_rates()
 	{
 		if ($this->input->post('add_hcp_service_btn') !== null) {
 			$hcp_service = $this->input->post('hcp_service');
@@ -136,6 +136,7 @@ class Settings extends CI_Controller
 			$data['title'] = 'HWBZ Hourly Rates';
 			$data['admin_data'] = logged_in_admin_row();
 			$data['all_usa_states'] = $this->multipleNeedsModel->get_all_usa_states();
+			$data['hcp_services'] = $this->SettingsModel->get_all_hcp_services();
 			$this->load->view('layout', $data);
 		}
 	}

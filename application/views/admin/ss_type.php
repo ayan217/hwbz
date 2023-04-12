@@ -15,7 +15,6 @@
 			<div class="card-body">
 				<h4 class="card-title">Service Seeker Type</h4>
 				<form class="forms-sample" action="<?= ADMIN_URL ?>ss-type" method="post">
-					<input type="hidden" name="type" value='retail'>
 					<div class="form-group d-flex">
 						<div class="col-3"><label>Enter Service Seeker Type</label><input name="ss_type" type="text" class="form-control" required></div>
 						<div class="col-6" style="margin-left:15px;"><button name="add_ss_type_btn" type="submit" class="btn btn-success btn-rounded btn-fw">Add</button></div>

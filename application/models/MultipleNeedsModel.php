@@ -39,7 +39,7 @@ class multipleNeedsModel extends CI_Model
 		if ($query->num_rows() == 0) {
 			return false;
 		} else {
-			return $query->row();
+			return $query->result();
 		}
 	}
 }
