@@ -74,12 +74,11 @@
 						<tbody>
 							<?php
 							if (!empty($hourly_rates)) {
-								print_r($hourly_rates);
 								foreach ($hourly_rates as $hourly_rate) {
 							?>
 
 									<tr>
-										<td id="hourly_rate_state<?= $hourly_rate->id ?>"><?= $hourly_rate->state_name ?></td>
+										<td id="hourly_rate_state<?= $hourly_rate->id ?>"><?= $hourly_rate->state_name ?> (<?= $hourly_rate->state_code ?>)</td>
 										<td id="hourly_rate_service<?= $hourly_rate->id ?>"><?= $hourly_rate->service_name ?></td>
 										<td id="hourly_rate<?= $hourly_rate->id ?>">$<?= $hourly_rate->amount ?></td>
 										<td id="hourly_rate_edit_btn<?= $hourly_rate->id ?>" data-state_id="<?= $hourly_rate->state_id ?>" data-service_id="<?= $hourly_rate->service_id ?>" data-rate="<?= $hourly_rate->amount ?>"><a href="javascript:void(0)" type="button" class="btn btn-warning btn-rounded btn-fw" onclick="update_hourly_rate_form(<?= $hourly_rate->id ?>)">Edit</a></td>
