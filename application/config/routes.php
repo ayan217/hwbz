@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -57,10 +57,12 @@ $route['login'] = 'Home/login';
 //general pages
 // admin pages
 $route['admin'] = 'admin/Login';
+//settings
 $route['admin/commission'] = 'admin/Settings/commission';
 $route['admin/ss-type'] = 'admin/Settings/ss_type';
 $route['admin/hcp-services'] = 'admin/Settings/hcp_service';
 $route['admin/hourly-rates'] = 'admin/Settings/hourly_rates';
+//settings
 // admin pages
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
