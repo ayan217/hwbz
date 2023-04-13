@@ -119,13 +119,17 @@ class Settings extends CI_Controller
 	}
 	public function hourly_rates()
 	{
-		if ($this->input->post('add_hcp_service_btn') !== null) {
+		if ($this->input->post('add_hourly_rate_btn') !== null) {
+			$hourly_rate = $this->input->post('hourly_rate');
 			$hcp_service = $this->input->post('hcp_service');
+			$hcp_state = $this->input->post('hcp_state');
 			$data = [
-				'name' => $hcp_service
+				'state_id' => $hcp_state,
+				'service_id' => $hcp_service,
+				'amount' => $hourly_rate
 			];
-			if ($this->SettingsModel->add_hcp_service($data) !== false) {
-				$this->session->set_flashdata('log_suc', 'New HCP Service Added.');
+			if ($this->SettingsModel->add_hourly_rate($data) !== false) {
+				$this->session->set_flashdata('log_suc', 'New Hourly Rate Added.');
 			} else {
 				$this->session->set_flashdata('log_err', 'Something Went Wrong !!');
 			}
@@ -137,6 +141,7 @@ class Settings extends CI_Controller
 			$data['admin_data'] = logged_in_admin_row();
 			$data['all_usa_states'] = $this->multipleNeedsModel->get_all_usa_states();
 			$data['hcp_services'] = $this->SettingsModel->get_all_hcp_services();
+			$data['hourly_rates'] = $this->SettingsModel->get_all_hourly_rates();
 			$this->load->view('layout', $data);
 		}
 	}

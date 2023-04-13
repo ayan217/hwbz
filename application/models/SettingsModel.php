@@ -90,4 +90,30 @@ class SettingsModel extends CI_Model
 			return false;
 		}
 	}
+	public function add_hourly_rate($data)
+	{
+		$table = TABLE_PREFIX . 'hourly_rate';
+		if ($this->db->insert($table, $data)) {
+			return $this->db->insert_id();
+		} else {
+			return false;
+		}
+	}
+	public function get_all_hourly_rates()
+	{
+		$table = TABLE_PREFIX . 'hourly_rate';
+		$state_table = TABLE_PREFIX . 'states';
+		$services_table = TABLE_PREFIX . 'hcp_services';
+		$this->db->select($table . '.*', $state_table . '.id as state_id', $state_table . '.Name as state_name', $state_table . '.Code as state_code', $services_table . '.id as service_id', $services_table . '.name as service_name');
+		$this->db->from($table);
+		$this->db->join($state_table, $state_table . '.id = ' . $table . '.state_id', 'left');
+		$this->db->join($services_table, $services_table . '.id = ' . $table . '.service_id', 'left');
+		$this->db->order_by($table . '.id', 'desc');
+		$query = $this->db->get();
+		if ($query->num_rows() == 0) {
+			return false;
+		} else {
+			return $query->result();
+		}
+	}
 }
