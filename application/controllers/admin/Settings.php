@@ -145,4 +145,29 @@ class Settings extends CI_Controller
 			$this->load->view('layout', $data);
 		}
 	}
+	public function delete_hourly_rate($id)
+	{
+		if ($this->SettingsModel->delete_hourly_rate($id) == true) {
+			$this->session->set_flashdata('log_suc', 'Success.');
+		} else {
+			$this->session->set_flashdata('log_err', 'Something Went Wrong !!');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+	public function update_hourly_rate($id)
+	{
+		$new_state = $this->input->post('state');
+		$new_service = $this->input->post('service');
+		$new_rate = $this->input->post('rate');
+		$data = [
+			'state_id' => $new_state,
+			'service_id' => $new_service,
+			'amount' => $new_rate,
+		];
+		if ($this->SettingsModel->update_hourly_rate($id, $data) == true) {
+			$this->session->set_flashdata('log_suc', 'Updated.');
+		} else {
+			$this->session->set_flashdata('log_err', 'Something Went Wrong !!');
+		}
+	}
 }

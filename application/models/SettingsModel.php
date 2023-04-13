@@ -116,4 +116,24 @@ class SettingsModel extends CI_Model
 			return $query->result();
 		}
 	}
+	public function delete_hourly_rate($id)
+	{
+		$table = TABLE_PREFIX . 'hourly_rate';
+		$this->db->where('id', $id);
+		if ($this->db->delete($table)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public function update_hourly_rate($id, $data)
+	{
+		$table = TABLE_PREFIX . 'hourly_rate';
+		$this->db->where('id', $id);
+		if ($this->db->update($table, $data)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
