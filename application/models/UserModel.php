@@ -11,6 +11,14 @@ class userModel extends CI_Model
 		$this->table_name = TABLE_PREFIX . 'user';
 	}
 
+	public function add_user($data)
+	{
+		if ($this->db->insert($this->table_name, $data)) {
+			return $this->db->insert_id();
+		} else {
+			return false;
+		}
+	}
 	public function checkUsernameExist($name)
 	{
 		$this->db->select();

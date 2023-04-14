@@ -154,8 +154,10 @@
 			type: 'POST',
 			url: url,
 			data: formData,
-			success: function(response) {
-				
+			dataType: 'json',
+			success: function(res) {
+				alert(res.status);
+				alert(res.msg);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				console.log(textStatus + ': ' + errorThrown);

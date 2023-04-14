@@ -15,11 +15,26 @@ class Home extends CI_Controller
 	public function signup()
 	{
 		if ($this->input->post()) {
-			
+
 			$user_type_raw = $this->input->post('user_type');
 			$user_type = substr($user_type_raw, strpos($user_type_raw, "-") + 1);
 			if ($user_type_raw == PATIENT) {
 				$prefix = 'p_';
+				$this->form_validation->set_rules(
+					'p_username',
+					'Username',
+					'required|min_length[3]|max_length[12]|is_unique[hwbz_user.user_name]',
+					array(
+						'required'      => 'You have not provided %s.',
+						'is_unique'     => 'This %s already exists.'
+					)
+				);
+				$this->form_validation->set_rules('p_fname', 'First Name', 'required');
+				$this->form_validation->set_rules('p_lname', 'Last Name', 'required');
+				$this->form_validation->set_rules('p_password', 'Password', 'trim|required|min_length[8]');
+				$this->form_validation->set_rules('p_cpassword', 'Password Confirmation', 'trim|required|matches[p_password]');
+				$this->form_validation->set_rules('p_email', 'Email', 'required|is_unique[hwbz_user.email]');
+				
 			} elseif ($user_type_raw == ORG) {
 				$prefix = 'o_';
 			} elseif ($user_type_raw == HCP) {
@@ -51,38 +66,52 @@ class Home extends CI_Controller
 			$created_at = date('Y-m-d H:i:s');
 			$updated_at = '';
 
-			if (password_verify($cpassword_decoded, $password_encoded)) {
-				echo 'same psw';
-			}else{
-				echo 'wrong_psw';
+			if ($this->form_validation->run() == TRUE) {
+
+				$data = [
+					'user_name' => $user_name,
+					'first_name' => $first_name,
+					'last_name' => $last_name,
+					'acc_type' => $acc_type,
+					'email' => $email,
+					'phone' => $phone,
+					'password' => $password_encoded,
+					'address' => $address,
+					'zip' => $zip,
+					'dob' => $dob,
+					'ssn' => $ssn,
+					'gender' => $gender,
+					'emergency_info' => $emergency_info,
+					'ss_type_id' => $ss_type_id,
+					'org_name' => $org_name,
+					'suspended_till' => $suspended_till,
+					'stricks' => $stricks,
+					'notes' => $notes,
+					'notification_status' => $notification_status,
+					'notification_type' => $notification_type,
+					'created_at' => $created_at,
+					'updated_at' => $updated_at,
+				];
+
+				if ($this->UserModel->add_user($data) !== false) {
+					$res = [
+						'status' => 1,
+						'msg' => 'User Added.'
+					];
+				} else {
+					$res = [
+						'status' => 0,
+						'msg' => 'Something Went Wrong..!!'
+					];
+				}
+			} else {
+				$res = [
+					'status' => 0,
+					// 'msg' => var_dump($_POST) . validation_errors()
+					'msg' => validation_errors()
+				];
 			}
-
-			$data = [
-				'user_name' => $user_name,
-				'first_name' => $first_name,
-				'last_name' => $last_name,
-				'acc_type' => $acc_type,
-				'email' => $email,
-				'phone' => $phone,
-				'password' => $password_encoded,
-				'address' => $address,
-				'zip' => $zip,
-				'dob' => $dob,
-				'ssn' => $ssn,
-				'gender' => $gender,
-				'emergency_info' => $emergency_info,
-				'ss_type_id' => $ss_type_id,
-				'org_name' => $org_name,
-				'suspended_till' => $suspended_till,
-				'stricks' => $stricks,
-				'notes' => $notes,
-				'notification_status' => $notification_status,
-				'notification_type' => $notification_type,
-				'created_at' => $created_at,
-				'updated_at' => $updated_at,
-			];
-
-			
+			echo json_encode($res);
 		} else {
 			$this->load->model('SettingsModel');
 			$data['ss_types'] = $this->SettingsModel->get_all_ss_type();
