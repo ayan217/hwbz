@@ -105,3 +105,9 @@ define('PATIENT', 'USER-3');
 define('ORG', 'USER-4');
 
 //application user types
+
+//upload file paths
+
+define('HCP_SIGNUP_DOCS', FCPATH . 'assets/uploads/hcp_signups/');
+
+//upload file paths

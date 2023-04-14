@@ -16,6 +16,8 @@ class Home extends CI_Controller
 	{
 		if ($this->input->post()) {
 
+			$hcp_form_1 = isset($_POST['hcp_form_1']) ? $_POST['hcp_form_1'] : 0;
+
 			$user_type_raw = $this->input->post('user_type');
 			$user_type = substr($user_type_raw, strpos($user_type_raw, "-") + 1);
 			if ($user_type_raw == PATIENT) {
@@ -30,7 +32,15 @@ class Home extends CI_Controller
 				$this->form_validation->set_rules($prefix . 'org_name', 'Organization Name', 'required');
 			} elseif ($user_type_raw == HCP) {
 				$prefix = 'h_';
+				$this->form_validation->set_rules($prefix . 'gender', 'Gender', 'required|in_list[M,F,O]');
+				$this->form_validation->set_rules($prefix . 'ssn', 'SSN', 'required');
+				$this->form_validation->set_rules($prefix . 'dob', 'Date of Birth', 'required|callback_valid_date');
+				$this->form_validation->set_rules($prefix . 'emergency_info', 'Emergency Info', 'required');
+				if($hcp_form_1 == 0){
+					
+				}
 			}
+
 			//common rules
 			$this->form_validation->set_rules(
 				$prefix . 'username',
@@ -59,6 +69,7 @@ class Home extends CI_Controller
 			$this->form_validation->set_rules($prefix . 'zip', 'Zip Code', 'required|numeric|min_length[5]|max_length[10]');
 			$this->form_validation->set_rules($prefix . 'phone', 'Phone Number', 'required|numeric|min_length[10]|max_length[15]');
 			//common rules
+
 			$user_name = isset($_POST[$prefix . 'username']) ? $_POST[$prefix . 'username'] : '';
 			$first_name = isset($_POST[$prefix . 'fname']) ? $_POST[$prefix . 'fname'] : '';
 			$last_name = isset($_POST[$prefix . 'lname']) ? $_POST[$prefix . 'lname'] : '';
@@ -69,7 +80,8 @@ class Home extends CI_Controller
 			$cpassword_decoded = isset($_POST[$prefix . 'cpassword']) ? $_POST[$prefix . 'cpassword'] : '';
 			$password_encoded = password_hash($password_decoded, PASSWORD_DEFAULT);
 			$address = isset($_POST[$prefix . 'address']) ? $_POST[$prefix . 'address'] : '';
-			$address = isset($_POST[$prefix . 'city']) ? $_POST[$prefix . 'city'] : '';
+			$city = isset($_POST[$prefix . 'city']) ? $_POST[$prefix . 'city'] : '';
+			$state = isset($_POST[$prefix . 'state']) ? $_POST[$prefix . 'state'] : '';
 			$zip = isset($_POST[$prefix . 'zip']) ? $_POST[$prefix . 'zip'] : '';
 			$dob = isset($_POST[$prefix . 'dob']) ? $_POST[$prefix . 'dob'] : '';
 			$ssn = isset($_POST[$prefix . 'ssn']) ? $_POST[$prefix . 'ssn'] : '';
@@ -95,6 +107,8 @@ class Home extends CI_Controller
 					'email' => $email,
 					'phone' => $phone,
 					'password' => $password_encoded,
+					'city' => $city,
+					'state_id' => $state,
 					'address' => $address,
 					'zip' => $zip,
 					'dob' => $dob,
@@ -111,22 +125,27 @@ class Home extends CI_Controller
 					'created_at' => $created_at,
 					'updated_at' => $updated_at,
 				];
-
-				if ($this->UserModel->add_user($data) !== false) {
-					$res = [
-						'status' => 1,
-						'msg' => 'User Added.'
-					];
+				if ($hcp_form_1 == 0) {
+					if ($this->UserModel->add_user($data) !== false) {
+						$res = [
+							'status' => 1,
+							'msg' => 'User Added.'
+						];
+					} else {
+						$res = [
+							'status' => 0,
+							'msg' => 'Something Went Wrong..!!'
+						];
+					}
 				} else {
 					$res = [
-						'status' => 0,
-						'msg' => 'Something Went Wrong..!!'
+						'status' => 2,
+						'msg' => 'Go Next.'
 					];
 				}
 			} else {
 				$res = [
 					'status' => 0,
-					// 'msg' => var_dump($_POST) . validation_errors()
 					'msg' => validation_errors()
 				];
 			}

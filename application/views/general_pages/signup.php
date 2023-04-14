@@ -1,4 +1,5 @@
 <form action="<?= BASE_URL . 'signup' ?>" method="post" id="signup_form">
+	<input type="hidden" name="hcp_form_1" value="0">
 	<div id="signup-user-type">
 		<h1>I want to signup as a</h1>
 		<label for="<?= PATIENT ?>"><input checked id="<?= PATIENT ?>" type="radio" name="user_type" value="<?= PATIENT ?>">Individual Patient</label>
@@ -18,7 +19,7 @@
 					<input id="h_fname" type="text" name="h_fname" placeholder="First Name">
 					<input id="h_lname" type="text" name="h_lname" placeholder="Last Name">
 					<select name="h_gender" id="h_gender">
-						<option value="" selected disabled>Gender</option>
+						<option value="0" selected>Gender</option>
 						<option value="M">Male</option>
 						<option value="F">Female</option>
 						<option value="O">Other</option>
@@ -27,7 +28,7 @@
 					<input id="h_address" type="text" name="h_address" placeholder="Street Address">
 					<input id="h_city" type="text" name="h_city" placeholder="City">
 					<select name="h_state" id="h_state">
-						<option value="" selected disabled>State</option>
+						<option value="0" selected>State</option>
 						<?php
 						if (!empty($all_usa_states)) {
 							foreach ($all_usa_states as $state) {
@@ -57,7 +58,7 @@
 				<input type="file" name="fc" id="">
 				<input type="file" name="pli" id="">
 				<div><button type="button" class="sign-up" id="hcp-form1-btn">Sign Up Now</button></div>
-				<div><button type="button" id="hcp-form1-btn" onclick="hcp_form_1();">Back</button></div>
+				<div><button type="button" id="hcp-form1-btn" onclick="hcp_form_1_back();">Back</button></div>
 			</div>
 		</div>
 		<div id="patient-form" style="display:none">
@@ -143,6 +144,7 @@
 <div style="color: red;" id="error_output"></div>
 <script>
 	$(".sign-up").click(function() {
+		$('[name="hcp_form_1"]').val(0);
 		submit_signup_form();
 	});
 
@@ -157,7 +159,10 @@
 			data: formData,
 			dataType: 'json',
 			success: function(res) {
-			$('#error_output').html(res.msg);
+				if (res.status == 2) {
+					hcp_form_2_trigger();
+				}
+				$('#error_output').html(res.msg);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				console.log(textStatus + ': ' + errorThrown);
