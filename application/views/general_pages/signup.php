@@ -70,7 +70,7 @@
 				<input id="p_fname" type="text" name="p_fname" placeholder="First Name">
 				<input id="p_lname" type="text" name="p_lname" placeholder="Last Name">
 				<select name="p_gender" id="p_gender">
-					<option value="" selected disabled>Gender</option>
+					<option value="0" selected>Gender</option>
 					<option value="M">Male</option>
 					<option value="F">Female</option>
 					<option value="O">Other</option>
@@ -79,7 +79,7 @@
 				<input id="p_address" type="text" name="p_address" placeholder="Street Address">
 				<input id="p_city" type="text" name="p_city" placeholder="City">
 				<select name="p_state" id="">
-					<option value="" selected disabled>State</option>
+					<option value="0" selected>State</option>
 					<?php
 					if (!empty($all_usa_states)) {
 						foreach ($all_usa_states as $state) {
@@ -107,7 +107,7 @@
 				<input id="o_fname" type="text" name="o_fname" placeholder="First Name">
 				<input id="o_lname" type="text" name="o_lname" placeholder="Last Name">
 				<select name="o_org_type" id="o_org_type">
-					<option value="" selected disabled>Organization Type</option>
+					<option value="0" selected>Organization Type</option>
 					<?php
 					if (!empty($ss_types)) {
 						foreach ($ss_types as $ss_type) {
@@ -122,7 +122,7 @@
 				<input id="o_address" type="text" name="o_address" placeholder="Street Address">
 				<input id="o_city" type="text" name="o_city" placeholder="City">
 				<select name="o_state" id="o_state">
-					<option value="" selected disabled>State</option>
+					<option value="0" selected>State</option>
 					<?php
 					if (!empty($all_usa_states)) {
 						foreach ($all_usa_states as $state) {
@@ -140,6 +140,7 @@
 		</div>
 	</div>
 </form>
+<div style="color: red;" id="error_output"></div>
 <script>
 	$(".sign-up").click(function() {
 		submit_signup_form();
@@ -156,8 +157,7 @@
 			data: formData,
 			dataType: 'json',
 			success: function(res) {
-				alert(res.status);
-				alert(res.msg);
+			$('#error_output').html(res.msg);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				console.log(textStatus + ': ' + errorThrown);

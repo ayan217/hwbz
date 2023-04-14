@@ -20,27 +20,45 @@ class Home extends CI_Controller
 			$user_type = substr($user_type_raw, strpos($user_type_raw, "-") + 1);
 			if ($user_type_raw == PATIENT) {
 				$prefix = 'p_';
-				$this->form_validation->set_rules(
-					'p_username',
-					'Username',
-					'required|min_length[3]|max_length[12]|is_unique[hwbz_user.user_name]',
-					array(
-						'required'      => 'You have not provided %s.',
-						'is_unique'     => 'This %s already exists.'
-					)
-				);
-				$this->form_validation->set_rules('p_fname', 'First Name', 'required');
-				$this->form_validation->set_rules('p_lname', 'Last Name', 'required');
-				$this->form_validation->set_rules('p_password', 'Password', 'trim|required|min_length[8]');
-				$this->form_validation->set_rules('p_cpassword', 'Password Confirmation', 'trim|required|matches[p_password]');
-				$this->form_validation->set_rules('p_email', 'Email', 'required|is_unique[hwbz_user.email]');
-				
+				$this->form_validation->set_rules($prefix . 'ssn', 'SSN', 'required');
+				$this->form_validation->set_rules($prefix . 'emergency_info', 'Emergency Info', 'required');
+				$this->form_validation->set_rules($prefix . 'gender', 'Gender', 'required|in_list[M,F,O]');
+				$this->form_validation->set_rules($prefix . 'dob', 'Date of Birth', 'required|callback_valid_date');
 			} elseif ($user_type_raw == ORG) {
 				$prefix = 'o_';
+				$this->form_validation->set_rules($prefix . 'org_type', 'Organization Type', 'required|greater_than[0]');
+				$this->form_validation->set_rules($prefix . 'org_name', 'Organization Name', 'required');
 			} elseif ($user_type_raw == HCP) {
 				$prefix = 'h_';
 			}
-
+			//common rules
+			$this->form_validation->set_rules(
+				$prefix . 'username',
+				'Username',
+				'required|min_length[3]|max_length[12]|is_unique[' . TABLE_PREFIX . 'user.user_name]',
+				array(
+					'required'      => 'You have not provided %s.',
+					'is_unique'     => 'This %s already exists.'
+				)
+			);
+			$this->form_validation->set_rules($prefix . 'password', 'Password', 'trim|required|min_length[8]');
+			$this->form_validation->set_rules($prefix . 'cpassword', 'Password Confirmation', 'trim|required|matches[' . $prefix . 'password]');
+			$this->form_validation->set_rules($prefix . 'email', 'Email', 'required|valid_email|is_unique[' . TABLE_PREFIX . 'user.email]', array(
+				'required'      => 'You have not provided your %s.',
+				'valid_email'      => '%s is not valid.',
+				'is_unique'     => 'This %s already exists.'
+			));
+			$this->form_validation->set_rules($prefix . 'fname', 'First Name', 'required');
+			$this->form_validation->set_rules($prefix . 'lname', 'Last Name', 'required');
+			$this->form_validation->set_rules($prefix . 'address', 'Street Address', 'required');
+			$this->form_validation->set_rules($prefix . 'city', 'City', 'required');
+			$this->form_validation->set_rules($prefix . 'state', 'State', 'required|greater_than[0]', array(
+				'required'      => 'Please select a valid %s for your location.',
+				'greater_than'      => 'Please select a valid %s for your location.',
+			));
+			$this->form_validation->set_rules($prefix . 'zip', 'Zip Code', 'required|numeric|min_length[5]|max_length[10]');
+			$this->form_validation->set_rules($prefix . 'phone', 'Phone Number', 'required|numeric|min_length[10]|max_length[15]');
+			//common rules
 			$user_name = isset($_POST[$prefix . 'username']) ? $_POST[$prefix . 'username'] : '';
 			$first_name = isset($_POST[$prefix . 'fname']) ? $_POST[$prefix . 'fname'] : '';
 			$last_name = isset($_POST[$prefix . 'lname']) ? $_POST[$prefix . 'lname'] : '';
@@ -51,6 +69,7 @@ class Home extends CI_Controller
 			$cpassword_decoded = isset($_POST[$prefix . 'cpassword']) ? $_POST[$prefix . 'cpassword'] : '';
 			$password_encoded = password_hash($password_decoded, PASSWORD_DEFAULT);
 			$address = isset($_POST[$prefix . 'address']) ? $_POST[$prefix . 'address'] : '';
+			$address = isset($_POST[$prefix . 'city']) ? $_POST[$prefix . 'city'] : '';
 			$zip = isset($_POST[$prefix . 'zip']) ? $_POST[$prefix . 'zip'] : '';
 			$dob = isset($_POST[$prefix . 'dob']) ? $_POST[$prefix . 'dob'] : '';
 			$ssn = isset($_POST[$prefix . 'ssn']) ? $_POST[$prefix . 'ssn'] : '';
@@ -122,7 +141,22 @@ class Home extends CI_Controller
 			$this->load->view('layout', $data);
 		}
 	}
+	// Custom validation callback function for date of birth
+	public function valid_date($str)
+	{
+		// Parse the date string into a timestamp
+		$timestamp = strtotime($str);
 
+		// Check if the date string was valid and it's a valid date
+		if ($timestamp === false || !checkdate(date('m', $timestamp), date('d', $timestamp), date('Y', $timestamp))) {
+			// Date is not valid
+			$this->form_validation->set_message('valid_date', 'Please enter a valid date for {field}.');
+			return false;
+		}
+
+		// Date is valid
+		return true;
+	}
 	public function login()
 	{
 		$data['folder'] = 'general_pages';
