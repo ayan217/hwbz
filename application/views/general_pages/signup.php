@@ -1,4 +1,4 @@
-<form action="<?= BASE_URL . 'signup' ?>" method="post" id="signup_form">
+<form action="<?= BASE_URL . 'signup' ?>" id="signup_form" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="hcp_form_1" value="0">
 	<div id="signup-user-type">
 		<h1>I want to signup as a</h1>
@@ -43,7 +43,7 @@
 					<input id="h_phone" type="text" name="h_phone" placeholder="Phone Number">
 					<input id="h_dob" type="date" name="h_dob" placeholder="DOB">
 					<input id="h_emergency_info" type="text" name="h_emergency_info" placeholder="Emergency Contact Info">
-					<div><button type="button" id="hcp-form1-btn" onclick="hcp_form_2();">Next</button></div>
+					<div><button type="button" onclick="submit_signup_form();">Next</button></div>
 				</div>
 			</div>
 			<div id="hcp-form-2" style="display:none">
@@ -57,8 +57,8 @@
 				<input type="file" name="ssc" id="">
 				<input type="file" name="fc" id="">
 				<input type="file" name="pli" id="">
-				<div><button type="button" class="sign-up" id="hcp-form1-btn">Sign Up Now</button></div>
-				<div><button type="button" id="hcp-form1-btn" onclick="hcp_form_1_back();">Back</button></div>
+				<div><button type="button" class="sign-up" id="hcp-form1-btn" disabled>Sign Up Now</button></div>
+				<div><button type="button" onclick="hcp_form_1_back();">Back</button></div>
 			</div>
 		</div>
 		<div id="patient-form" style="display:none">
@@ -142,15 +142,16 @@
 	</div>
 </form>
 <div style="color: red;" id="error_output"></div>
+<div style="color: red;" id="error_output2"></div>
 <script>
 	$(".sign-up").click(function() {
-		$('[name="hcp_form_1"]').val(0);
+		// $('[name="hcp_form_1"]').val(0);
 		submit_signup_form();
 	});
 
 	function submit_signup_form() {
 		event.preventDefault();
-		var formData = $('#signup_form').serialize();
+		var formData = new FormData($('#signup_form')[0]);
 		var url = '<?= BASE_URL . 'signup' ?>';
 
 		$.ajax({
@@ -158,15 +159,67 @@
 			url: url,
 			data: formData,
 			dataType: 'json',
+			processData: false,
+			contentType: false,
 			success: function(res) {
 				if (res.status == 2) {
+					$('[name="hcp_form_1"]').val(1);
 					hcp_form_2_trigger();
 				}
 				$('#error_output').html(res.msg);
+				$('#error_output2').html(res.error);
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				console.log(textStatus + ': ' + errorThrown);
 			}
 		});
 	};
+
+	function select_user_type() {
+		var userType = $('input[name=user_type]:checked').val();
+		if (userType == 'USER-3') {
+			$('#patient-form').show();
+			$('#hcp-form-1').hide();
+			$('#hcp-form-2').hide();
+			$('#org-form').hide();
+			$('#signup-user-type').hide();
+		} else if (userType == 'USER-4') {
+			$('#org-form').show();
+			$('#hcp-form-1').hide();
+			$('#hcp-form-2').hide();
+			$('#patient-form').hide();
+			$('#signup-user-type').hide();
+		} else if (userType == 'USER-2') {
+			$('#hcp-forms').show();
+			$('#hcp-form-2').hide();
+			$('#patient-form').hide();
+			$('#org-form').hide();
+			$('#signup-user-type').hide();
+		}
+	};
+
+	function hcp_form_2_trigger() {
+		$('#hcp-form-1').hide();
+		$('#hcp-form-2').show();
+	}
+
+	function hcp_form_1_back() {
+		$('[name="hcp_form_1"]').val(0);
+		$('#hcp-form-2').hide();
+		$('#hcp-form-1').show();
+	}
+	$(document).ready(function() {
+		$('input[type="file"]').on('change', function() {
+			var fileValues = $.map($('input[type="file"]'), function(e) {
+				return e.value;
+			}).join('');
+			if (fileValues !== '') {
+				// alert('not disabled');
+				$('#hcp-form1-btn').removeAttr('disabled');
+			} else {
+				// alert('disabled');
+				$('#hcp-form1-btn').attr('disabled', 'disabled');
+			}
+		});
+	});
 </script>

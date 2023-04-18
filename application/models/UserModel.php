@@ -19,6 +19,16 @@ class userModel extends CI_Model
 			return false;
 		}
 	}
+	public function add_hcp_docs($data)
+	{
+		$table = TABLE_PREFIX . 'hcp_docs';
+
+		if ($this->db->insert($table, $data)) {
+			return $this->db->insert_id();
+		} else {
+			return false;
+		}
+	}
 	public function checkUsernameExist($name)
 	{
 		$this->db->select();

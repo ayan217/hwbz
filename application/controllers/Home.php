@@ -1,9 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
 class Home extends CI_Controller
 {
-
 	public function index()
 	{
 		$data['folder'] = 'general_pages';
@@ -11,13 +9,10 @@ class Home extends CI_Controller
 		$data['title'] = 'HWBZ Home';
 		$this->load->view('layout', $data);
 	}
-
 	public function signup()
 	{
 		if ($this->input->post()) {
-
 			$hcp_form_1 = isset($_POST['hcp_form_1']) ? $_POST['hcp_form_1'] : 0;
-
 			$user_type_raw = $this->input->post('user_type');
 			$user_type = substr($user_type_raw, strpos($user_type_raw, "-") + 1);
 			if ($user_type_raw == PATIENT) {
@@ -36,11 +31,7 @@ class Home extends CI_Controller
 				$this->form_validation->set_rules($prefix . 'ssn', 'SSN', 'required');
 				$this->form_validation->set_rules($prefix . 'dob', 'Date of Birth', 'required|callback_valid_date');
 				$this->form_validation->set_rules($prefix . 'emergency_info', 'Emergency Info', 'required');
-				if($hcp_form_1 == 0){
-					
-				}
 			}
-
 			//common rules
 			$this->form_validation->set_rules(
 				$prefix . 'username',
@@ -69,7 +60,6 @@ class Home extends CI_Controller
 			$this->form_validation->set_rules($prefix . 'zip', 'Zip Code', 'required|numeric|min_length[5]|max_length[10]');
 			$this->form_validation->set_rules($prefix . 'phone', 'Phone Number', 'required|numeric|min_length[10]|max_length[15]');
 			//common rules
-
 			$user_name = isset($_POST[$prefix . 'username']) ? $_POST[$prefix . 'username'] : '';
 			$first_name = isset($_POST[$prefix . 'fname']) ? $_POST[$prefix . 'fname'] : '';
 			$last_name = isset($_POST[$prefix . 'lname']) ? $_POST[$prefix . 'lname'] : '';
@@ -96,9 +86,7 @@ class Home extends CI_Controller
 			$notification_type = '';
 			$created_at = date('Y-m-d H:i:s');
 			$updated_at = '';
-
 			if ($this->form_validation->run() == TRUE) {
-
 				$data = [
 					'user_name' => $user_name,
 					'first_name' => $first_name,
@@ -125,11 +113,57 @@ class Home extends CI_Controller
 					'created_at' => $created_at,
 					'updated_at' => $updated_at,
 				];
-				if ($hcp_form_1 == 0) {
-					if ($this->UserModel->add_user($data) !== false) {
+				if ($hcp_form_1 == 0 && $user_type_raw == HCP) {
+					$res = [
+						'status' => 2,
+						'msg' => 'Go Next.'
+					];
+				} else {
+					if ($inserted_user_id = $this->UserModel->add_user($data) !== false) {
+						//hcp file uploads
+						if ($user_type_raw == HCP) {
+							$hcp_fields = array('dl' => 'Driver\'s License or State ID', 'acl' => 'Active Professional License', 'abc' => 'Active BLS Card', 'covid' => 'Covid-19 Vaccine Card or exemption letter', 'phy' => 'Physical', 'tb' => 'TB test result or negative chest X-Ray', 'bc' => 'Background Check', 'ssc' => 'Social Security Card', 'fc' => 'Fire Card', 'pli' => 'Professional Liability Card');
+							$error = '';
+							foreach ($hcp_fields as $hcp_field => $field_name) {
+
+								if (!empty($_FILES[$hcp_field]['name'])) {
+
+									$_FILES['file']['name'] = $_FILES[$hcp_field]['name'];
+									$_FILES['file']['type'] = $_FILES[$hcp_field]['type'];
+									$_FILES['file']['tmp_name'] = $_FILES[$hcp_field]['tmp_name'];
+									$_FILES['file']['error'] = $_FILES[$hcp_field]['error'];
+									$_FILES['file']['size'] = $_FILES[$hcp_field]['size'];
+
+									$filename = $inserted_user_id . '_' . $hcp_field . '_' . time();
+
+									// $uploadPath =  HCP_SIGNUP_DOCS;
+									$uploadPath = HCP_SIGNUP_DOCS;
+									$config['upload_path'] = $uploadPath;
+									$config['allowed_types'] = '*';
+									$config['max_size'] = 0;
+									$config['file_name'] = $filename;
+
+									$this->upload->initialize($config);
+
+									if ($this->upload->do_upload('file')) {
+
+										$hcp_doc_data = [
+											'user_id' => $inserted_user_id,
+											'file' => $filename,
+											'doc_name' => $field_name
+										];
+										$this->UserModel->add_hcp_docs($hcp_doc_data);
+									} else {
+										$error = $this->upload->display_errors();
+									}
+								}
+							}
+						}
+						//hcp file uploads
 						$res = [
 							'status' => 1,
-							'msg' => 'User Added.'
+							'msg' => 'User Added.',
+							'error' => $error
 						];
 					} else {
 						$res = [
@@ -137,11 +171,6 @@ class Home extends CI_Controller
 							'msg' => 'Something Went Wrong..!!'
 						];
 					}
-				} else {
-					$res = [
-						'status' => 2,
-						'msg' => 'Go Next.'
-					];
 				}
 			} else {
 				$res = [
@@ -165,14 +194,12 @@ class Home extends CI_Controller
 	{
 		// Parse the date string into a timestamp
 		$timestamp = strtotime($str);
-
 		// Check if the date string was valid and it's a valid date
 		if ($timestamp === false || !checkdate(date('m', $timestamp), date('d', $timestamp), date('Y', $timestamp))) {
 			// Date is not valid
 			$this->form_validation->set_message('valid_date', 'Please enter a valid date for {field}.');
 			return false;
 		}
-
 		// Date is valid
 		return true;
 	}

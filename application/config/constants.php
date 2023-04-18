@@ -108,6 +108,6 @@ define('ORG', 'USER-4');
 
 //upload file paths
 
-define('HCP_SIGNUP_DOCS', FCPATH . 'assets/uploads/hcp_signups/');
+define('HCP_SIGNUP_DOCS', FCPATH . 'assets/uploads/hcp_signups');
 
 //upload file paths
