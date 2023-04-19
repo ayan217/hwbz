@@ -12,11 +12,26 @@ class Profile extends CI_Controller
 	public function account_settings()
 	{
 		$this->load->model('SettingsModel');
-		\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
 		$data['folder'] = 'ss';
 		$data['title'] = 'HWBZ SS Account';
 		$data['template'] = 'account_settings';
 		$data['user_data'] = logged_in_ss_row();
+
+		\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
+		$customer_id = logged_in_ss_row()->stripe_cust_id;
+		if ($customer_id !== null) {
+
+			$customer = \Stripe\Customer::retrieve($customer_id);
+			$cards_data = \Stripe\Customer::allSources(
+				$customer->id,
+				array("object" => "card")
+			);
+			$data['cards'] = $cards_data->data;
+		} else {
+			$data['cards'] = array();
+		}
+
+
 		$data['ss_types'] = $this->SettingsModel->get_all_ss_type();
 		$data['all_usa_states'] = $this->multipleNeedsModel->get_all_usa_states();
 		$this->load->view('layout', $data);
@@ -27,6 +42,29 @@ class Profile extends CI_Controller
 		$this->UserModel->update_user($_POST, $ss_id);
 		redirect($_SERVER['HTTP_REFERER']);
 	}
+
+	public function delete_card()
+	{
+		$cust_id = $this->input->post('cust_id');
+		$card_id = $this->input->post('card_id');
+
+		\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
+
+		$deletedCard = \Stripe\Customer::deleteSource(
+			$cust_id,
+			$card_id
+		);
+
+		if ($deletedCard->isDeleted()) {
+			redirect($_SERVER['HTTP_REFERER'], 'refresh');
+		} else {
+			redirect($_SERVER['HTTP_REFERER'], 'refresh');
+		}
+	}
+
+
+	//stripe testing=================================================================================================================
+
 	public function stripe_all_cust()
 	{
 		\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));

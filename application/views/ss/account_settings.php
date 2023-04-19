@@ -5,7 +5,7 @@
 				<div class="card-body">
 					<h4 class="card-title">Account Information</h4>
 					<hr>
-					<form class="forms-sample" method="post" action="<?=BASE_URL?>ss/Profile/update_account">
+					<form class="forms-sample" method="post" action="<?= BASE_URL ?>ss/Profile/update_account">
 						<div class="form-group">
 							<label for="exampleInputUsername1">Email</label>
 							<input readonly required type="email" class="form-control" id="exampleInputUsername1" placeholder="Email" value="<?= $user_data->email ?>">
@@ -83,6 +83,25 @@
 				<div class="card-body">
 					<h4 class="card-title">Saved Cards</h4>
 					<hr>
+					<ul>
+						<?php
+						if (!empty($cards)) {
+							foreach ($cards as $card) { ?>
+								<li>
+									<?php echo $card->brand . ' XXXX XXXX XXXX ' . $card->last4; ?>
+									<form method="post" action="<?= BASE_URL ?>ss/Profile/delete_card">
+										<input type="hidden" name="card_id" value="<?php echo $card->id; ?>">
+										<input type="hidden" name="cust_id" value="<?php echo $user_data->stripe_cust_id; ?>">
+										<button type="submit" name="delete_card">Delete</button>
+									</form>
+								</li>
+						<?php
+							}
+						} else {
+							echo 'No saved are cards found.';
+						};
+						?>
+					</ul>
 				</div>
 			</div>
 		</div>
