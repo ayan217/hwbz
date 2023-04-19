@@ -20,7 +20,7 @@
 				</div>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="<?= BASE_URL ?>ss">
+				<a class="nav-link" href="<?= BASE_URL ?>ss/job">
 					<i class="mdi mdi-grid-large menu-icon"></i>
 					<span class="menu-title">Post a Job</span>
 				</a>

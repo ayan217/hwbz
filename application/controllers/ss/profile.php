@@ -39,8 +39,13 @@ class Profile extends CI_Controller
 	public function update_account()
 	{
 		$ss_id = logged_in_ss_row()->user_id;
-		$this->UserModel->update_user($_POST, $ss_id);
-		redirect($_SERVER['HTTP_REFERER']);
+		if ($this->UserModel->update_user($_POST, $ss_id)) {
+			$this->session->set_flashdata('log_suc', 'Account Updated.');
+			redirect($_SERVER['HTTP_REFERER']);
+		} else {
+			$this->session->set_flashdata('log_err', 'Something Went Wrong !!');
+			redirect($_SERVER['HTTP_REFERER']);
+		}
 	}
 
 	public function delete_card()
@@ -56,8 +61,10 @@ class Profile extends CI_Controller
 		);
 
 		if ($deletedCard->isDeleted()) {
+			$this->session->set_flashdata('log_suc', 'Card Removed');
 			redirect($_SERVER['HTTP_REFERER'], 'refresh');
 		} else {
+			$this->session->set_flashdata('log_err', 'Something Went Wrong !!');
 			redirect($_SERVER['HTTP_REFERER'], 'refresh');
 		}
 	}

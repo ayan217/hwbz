@@ -1,4 +1,15 @@
 <div class="content-wrapper">
+	<?php
+	if ($this->session->flashdata('log_suc')) {
+	?>
+		<button type="button" class="cpy-alert btn btn-inverse-success btn-fw mb-2 w-100"><?= $this->session->flashdata('log_suc') ?></button>
+	<?php
+	} elseif ($this->session->flashdata('log_err')) {
+	?>
+		<button type="button" class="cpy-alert btn btn-inverse-danger btn-fw mb-2 w-100"><?= $this->session->flashdata('log_err') ?></button>
+	<?php
+	}
+	?>
 	<div class="row">
 		<div class="col-md-6 grid-margin stretch-card">
 			<div class="card">
