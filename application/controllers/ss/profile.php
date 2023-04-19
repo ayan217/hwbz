@@ -13,7 +13,6 @@ class Profile extends CI_Controller
 	{
 		$this->load->model('SettingsModel');
 		\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
-
 		$data['folder'] = 'ss';
 		$data['title'] = 'HWBZ SS Account';
 		$data['template'] = 'account_settings';
@@ -30,9 +29,7 @@ class Profile extends CI_Controller
 	}
 	public function stripe_all_cust()
 	{
-
 		\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
-
 		// Get a list of all customers
 		try {
 			$customers = \Stripe\Customer::all();
@@ -55,7 +52,6 @@ class Profile extends CI_Controller
 			// Handle other API errors
 			echo 'API error: ' . $e->getMessage();
 		}
-
 		// Display the list of customers and their IDs
 ?>
 		<table>
@@ -77,16 +73,13 @@ class Profile extends CI_Controller
 			</tbody>
 		</table>
 		<?php
-
 	}
 	public function stripe_customer_cards()
 	{
 		\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
 		$customer_id = 'cus_NTZsxkgXTDh2yT'; // replace with the customer ID you want to retrieve
-
 		try {
 			$customer = \Stripe\Customer::retrieve($customer_id);
-
 			$cards = \Stripe\Customer::allSources(
 				$customer->id,
 				array("object" => "card")
@@ -97,12 +90,11 @@ class Profile extends CI_Controller
 					$_POST['card_id']
 				);
 			}
-
 		?>
 			<ul>
 				<?php foreach ($cards->data as $card) : ?>
 					<li>
-						<?php echo $card->brand . ' ' . $card->last4; ?>
+						<?php echo $card->brand . ' XXXX XXXX XXXX ' . $card->last4; ?>
 						<form method="post">
 							<input type="hidden" name="card_id" value="<?php echo $card->id; ?>">
 							<button type="submit" name="delete_card">Delete</button>
@@ -110,7 +102,6 @@ class Profile extends CI_Controller
 					</li>
 				<?php endforeach; ?>
 			</ul>
-
 		<?php
 		} catch (\Stripe\Exception\CardException $e) {
 			// Handle card errors
@@ -131,10 +122,7 @@ class Profile extends CI_Controller
 			// Handle other API errors
 			echo 'API error: ' . $e->getMessage();
 		}
-
 		?>
-
-
 <?php
 	}
 }
