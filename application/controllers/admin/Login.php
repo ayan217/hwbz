@@ -18,7 +18,8 @@ class Login extends CI_Controller
 	{
 		$name     = $this->input->post('username');
 		$password = $this->input->post('password');
-		if ($nameExist = $this->UserModel->checkUsernameExist($name)) {
+		//0 means non admin 1 means admin
+		if ($nameExist = $this->UserModel->checkUsernameExist($name, 1)) {
 			if (password_verify($password, $nameExist->password)) {
 				$sess_array = array(
 					'user_log_id'  => $nameExist->user_id,

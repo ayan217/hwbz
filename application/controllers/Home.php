@@ -205,10 +205,40 @@ class Home extends CI_Controller
 	}
 	public function login()
 	{
-		$data['folder'] = 'general_pages';
-		$data['template'] = 'login';
-		$data['title'] = 'HWBZ Login';
-		$this->load->view('layout', $data);
+		if ($this->input->post()) {
+			$name     = $this->input->post('username');
+			$password = $this->input->post('password');
+			//0 means non admin 1 means admin
+			if ($nameExist = $this->UserModel->checkUsernameExist($name, 0)) {
+				if (password_verify($password, $nameExist->password)) {
+					$sess_array = array(
+						'user_id'  => $nameExist->user_id,
+						'user_name' => $nameExist->first_name . ' ' . $nameExist->last_name
+					);
+					$acc_type = $nameExist->acc_type;
+					if ('USER-' . $acc_type == HCP) {
+						$this->session->set_userdata('hcp_data', $sess_array);
+						redirect('hcp', 'refresh');
+					} elseif ('USER-' . $acc_type == ORG or 'USER-' . $acc_type == PATIENT) {
+						$this->session->set_userdata('ss_data', $sess_array);
+						redirect('ss', 'refresh');
+					}
+				} else {
+					$this->session->set_flashdata('log_err', 'Invalid Password !!');
+					redirect($_SERVER['HTTP_REFERER']);
+					// echo 'psw galat hay';
+				}
+			} else {
+				$this->session->set_flashdata('log_err', 'Invalid Username !!');
+				redirect($_SERVER['HTTP_REFERER']);
+				// echo 'username galat hay';
+			}
+		} else {
+			$data['folder'] = 'general_pages';
+			$data['template'] = 'login';
+			$data['title'] = 'HWBZ Login';
+			$this->load->view('layout', $data);
+		}
 	}
 	public function thankyou()
 	{
@@ -216,5 +246,10 @@ class Home extends CI_Controller
 		$data['template'] = 'thankyou';
 		$data['title'] = 'HWBZ Thank You';
 		$this->load->view('layout', $data);
+	}
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect('login', 'refresh');
 	}
 }
