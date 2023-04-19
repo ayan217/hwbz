@@ -134,9 +134,9 @@ class Home extends CI_Controller
 									$_FILES['file']['error'] = $_FILES[$hcp_field]['error'];
 									$_FILES['file']['size'] = $_FILES[$hcp_field]['size'];
 
-									$filename = $inserted_user_id . '_' . $hcp_field . '_' . time();
+									$file_extension = pathinfo($_FILES[$hcp_field]['name'], PATHINFO_EXTENSION);
+									$filename = $inserted_user_id . '_' . $hcp_field . '_' . time() . '.' . $file_extension;
 
-									// $uploadPath =  HCP_SIGNUP_DOCS;
 									$uploadPath = HCP_SIGNUP_DOCS;
 									$config['upload_path'] = $uploadPath;
 									$config['allowed_types'] = '*';
@@ -208,6 +208,13 @@ class Home extends CI_Controller
 		$data['folder'] = 'general_pages';
 		$data['template'] = 'login';
 		$data['title'] = 'HWBZ Login';
+		$this->load->view('layout', $data);
+	}
+	public function thankyou()
+	{
+		$data['folder'] = 'general_pages';
+		$data['template'] = 'thankyou';
+		$data['title'] = 'HWBZ Thank You';
 		$this->load->view('layout', $data);
 	}
 }

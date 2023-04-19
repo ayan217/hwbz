@@ -153,6 +153,7 @@
 		event.preventDefault();
 		var formData = new FormData($('#signup_form')[0]);
 		var url = '<?= BASE_URL . 'signup' ?>';
+		var thankyou_url = '<?= BASE_URL . 'thank-you' ?>';
 
 		$.ajax({
 			type: 'POST',
@@ -165,6 +166,9 @@
 				if (res.status == 2) {
 					$('[name="hcp_form_1"]').val(1);
 					hcp_form_2_trigger();
+				}
+				if (res.status == 1) {
+					window.location.replace(thankyou_url);
 				}
 				$('#error_output').html(res.msg);
 				$('#error_output2').html(res.error);
