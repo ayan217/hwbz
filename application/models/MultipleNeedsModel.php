@@ -42,4 +42,24 @@ class multipleNeedsModel extends CI_Model
 			return $query->result();
 		}
 	}
+	public function get_user_saved_cards()
+	{
+		$this->config->load('stripe');
+		require_once(FCPATH . 'vendor/stripe/stripe-php/init.php');
+		\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
+
+		$customer_id = logged_in_ss_row()->stripe_cust_id;
+		if ($customer_id !== null) {
+
+			$customer = \Stripe\Customer::retrieve($customer_id);
+			$cards_data = \Stripe\Customer::allSources(
+				$customer->id,
+				array("object" => "card")
+			);
+			$cards = $cards_data->data;
+		} else {
+			$cards = array();
+		}
+		return $cards;
+	}
 }

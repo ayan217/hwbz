@@ -116,6 +116,23 @@ class SettingsModel extends CI_Model
 			return $query->result();
 		}
 	}
+
+	public function get_hourly_rate_by_service($service_id, $state_id)
+	{
+		$table = TABLE_PREFIX . 'hourly_rate';
+		$this->db->select();
+		$this->db->from($table);
+		$this->db->where('state_id', $state_id);
+		$this->db->where('service_id', $service_id);
+		$query = $this->db->get(); {
+			if ($query->num_rows() == 0) {
+				return false;
+			} else {
+				return $query->row();
+			}
+		}
+	}
+
 	public function delete_hourly_rate($id)
 	{
 		$table = TABLE_PREFIX . 'hourly_rate';

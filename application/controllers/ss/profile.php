@@ -16,22 +16,7 @@ class Profile extends CI_Controller
 		$data['title'] = 'HWBZ SS Account';
 		$data['template'] = 'account_settings';
 		$data['user_data'] = logged_in_ss_row();
-
-		\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
-		$customer_id = logged_in_ss_row()->stripe_cust_id;
-		if ($customer_id !== null) {
-
-			$customer = \Stripe\Customer::retrieve($customer_id);
-			$cards_data = \Stripe\Customer::allSources(
-				$customer->id,
-				array("object" => "card")
-			);
-			$data['cards'] = $cards_data->data;
-		} else {
-			$data['cards'] = array();
-		}
-
-
+		$data['cards'] = $this->multipleNeedsModel->get_user_saved_cards();
 		$data['ss_types'] = $this->SettingsModel->get_all_ss_type();
 		$data['all_usa_states'] = $this->multipleNeedsModel->get_all_usa_states();
 		$this->load->view('layout', $data);
