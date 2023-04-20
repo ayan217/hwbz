@@ -198,13 +198,14 @@
 										<label for="stripe_card_cvv">
 											<input id="stripe_card_no" type="number" placeholder="123">
 										</label>
-										<label for="save_stripe_card"><input name="save_stripe_card" value="1" type="checkbox" id="save_stripe_card">Save This Card</label>
+										<label for="save_stripe_card"><input name="save_stripe_card" type="checkbox" id="save_stripe_card">Save This Card</label>
 									</div>
 								<?php
 								};
 								?>
 
 							</div>
+							<input type="hidden" name="payment_amount" value="" required>
 							<button type="button" onclick="post_job()">Pay Now & Post Your Job</button>
 						</div>
 					</form>
@@ -285,6 +286,7 @@
 					$('#sstate').html('State: ' + statename);
 					$('#szip').html('ZIP: ' + zip);
 					$('#samount').html('$' + res.net_amount);
+					$('input[name="payment_amount"]').val(res.net_amount);
 					$('#post_job_form_1').hide();
 					$('#post_job_form_2').show();
 				}
