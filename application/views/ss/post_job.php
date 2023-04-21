@@ -16,7 +16,7 @@
 				<div class="card-body">
 					<h4 class="card-title">Post A Job</h4>
 					<hr>
-					<form class="forms-sample" method="post" action="">
+					<form class="forms-sample" method="post" action="" id="post_job_form">
 						<div id="post_job_form_1">
 							<div class="form-group">
 								<label for="exampleInputUsername1">Date</label>
@@ -119,7 +119,7 @@
 									foreach ($cards as $card) { ?>
 										<div>
 											<?php echo $card->brand . ' XXXX XXXX XXXX ' . $card->last4; ?>
-											<input type="radio" name="card_id" value="<?php echo $card->id; ?>">
+											<input type="radio" name="card_id" data-cust_id="" value="<?php echo $card->id; ?>">
 										</div>
 									<?php
 									}
@@ -129,13 +129,13 @@
 									<label for="stripe_form_btn"><input name="stripe_form_btn" value="1" type="checkbox" id="stripe_form_btn">Pay With Another Card</label>
 									<div id="stripe_form" style="display: none;">
 										<label for="stripe_card_name">
-											<input id="stripe_card_name" type="text" placeholder="Enter Your Name">
+											<input name="card_holder_name" id="stripe_card_name" type="text" placeholder="Enter Your Name">
 										</label>
 										<label for="stripe_card_no">
-											<input id="stripe_card_no" type="number" placeholder="XXXX XXXX XXXX XXXX">
+											<input name="card_number" id="stripe_card_no" type="number" placeholder="XXXX XXXX XXXX XXXX">
 										</label>
 										<label for="stripe_card_mn">
-											<select name="stripe_card_mn" id="stripe_card_mn">
+											<select name="expiry_month" id="stripe_card_mn">
 												<option value="" selected disabled>MM</option>
 												<?php
 												for ($i = 1; $i <= 12; $i++) {
@@ -146,7 +146,7 @@
 											</select>
 										</label>
 										<label for="stripe_card_year">
-											<select name="stripe_card_year" id="stripe_card_year">
+											<select name="expiry_year" id="stripe_card_year">
 												<option value="" selected disabled>YYYY</option>
 												<?php
 												$currentYear = date("Y");
@@ -158,22 +158,22 @@
 											</select>
 										</label>
 										<label for="stripe_card_cvv">
-											<input id="stripe_card_no" type="number" placeholder="123">
+											<input name="cvc" id="stripe_card_no" type="number" placeholder="123">
 										</label>
-										<label for="save_stripe_card"><input name="save_stripe_card" value="1" type="checkbox" id="save_stripe_card">Save This Card</label>
+										<label for="save_stripe_card"><input name="save_stripe_card" type="checkbox" id="save_stripe_card">Save This Card</label>
 									</div>
 								<?php
 								} else {
 								?>
 									<div>
 										<label for="stripe_card_name">
-											<input id="stripe_card_name" type="text" placeholder="Enter Your Name">
+											<input name="card_holder_name" id="stripe_card_name" type="text" placeholder="Enter Your Name">
 										</label>
 										<label for="stripe_card_no">
-											<input id="stripe_card_no" type="number" placeholder="XXXX XXXX XXXX XXXX">
+											<input name="card_number" id="stripe_card_no" type="number" placeholder="XXXX XXXX XXXX XXXX">
 										</label>
 										<label for="stripe_card_mn">
-											<select name="stripe_card_mn" id="stripe_card_mn">
+											<select name="expiry_month" id="stripe_card_mn">
 												<option value="" selected disabled>MM</option>
 												<?php
 												for ($i = 1; $i <= 12; $i++) {
@@ -184,7 +184,7 @@
 											</select>
 										</label>
 										<label for="stripe_card_year">
-											<select name="stripe_card_year" id="stripe_card_year">
+											<select name="expiry_year" id="stripe_card_year">
 												<option value="" selected disabled>YYYY</option>
 												<?php
 												$currentYear = date("Y");
@@ -196,7 +196,7 @@
 											</select>
 										</label>
 										<label for="stripe_card_cvv">
-											<input id="stripe_card_no" type="number" placeholder="123">
+											<input name="cvc" id="stripe_card_no" type="number" placeholder="123">
 										</label>
 										<label for="save_stripe_card"><input name="save_stripe_card" type="checkbox" id="save_stripe_card">Save This Card</label>
 									</div>
@@ -206,7 +206,7 @@
 
 							</div>
 							<input type="hidden" name="payment_amount" value="" required>
-							<button type="button" onclick="post_job()">Pay Now & Post Your Job</button>
+							<button type="submit" onclick="post_job()">Pay Now & Post Your Job</button>
 						</div>
 					</form>
 				</div>
@@ -296,4 +296,26 @@
 			}
 		});
 	}
+
+	$(document).ready(function(e) {
+		$("#post_job_form").on('submit', (function(e) {
+			e.preventDefault();
+			var url = '<?= BASE_URL . 'ss/Job/post_job' ?>';
+			$.ajax({
+				url: url,
+				mimeType: "multipart/form-data",
+				contentType: false,
+				cache: false,
+				processData: false,
+				data: new FormData(this),
+				type: 'post',
+				success: function(result) {
+
+				},
+				error: function(result) {
+
+				}
+			});
+		}));
+	});
 </script>
