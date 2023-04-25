@@ -62,4 +62,39 @@ class multipleNeedsModel extends CI_Model
 		}
 		return $cards;
 	}
+	public function gen_pdf($html, $save_path, $output_type, $pdf_name_prefix)
+	{
+		// Load the MPDF library
+		require_once FCPATH . 'vendor/autoload.php';
+
+		// Initialize the PDF object
+		$mpdf = new \Mpdf\Mpdf();
+
+		// Set the PDF content
+
+		$pdf_content = $html;
+
+
+		// Write the PDF content to the PDF object
+		$mpdf->WriteHTML($pdf_content);
+
+		// Save the PDF to a folder
+		$pdf_filename = $pdf_name_prefix . '_' . date('YmdHis') . '.pdf';
+		$pdf_filepath = $save_path . '/' . $pdf_filename;
+		$mpdf->Output($pdf_filepath, $output_type);
+		return $pdf_filename;
+	}
+	public function get_any_table_row($table, $where)
+	{
+		$table_name = TABLE_PREFIX . $table;
+		$this->db->select('*');
+		$this->db->from($table_name);
+		$this->db->where($where);
+		$query = $this->db->get();
+		if ($query->num_rows() == 0) {
+			return false;
+		} else {
+			return $query->row();
+		}
+	}
 }

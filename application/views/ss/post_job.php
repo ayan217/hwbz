@@ -78,7 +78,7 @@
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail1">State</label>
-								<select required name="state_id" class="form-control">
+								<select required name="state" class="form-control">
 									<option value="0" selected>State</option>
 									<?php
 									if (!empty($all_usa_states)) {
@@ -255,8 +255,8 @@
 		var servicename = selectedservice.html();
 		var address = $('[name="address"]').val();
 		var city = $('[name="city"]').val();
-		var state = $('[name="state_id"]').val();
-		var selectedstate = $('[name="state_id"] option:selected');
+		var state = $('[name="state"]').val();
+		var selectedstate = $('[name="state"] option:selected');
 		var statename = selectedstate.html();
 		var zip = $('[name="zip"]').val();
 
@@ -272,6 +272,8 @@
 				'city': city,
 				'state': state,
 				'zip': zip,
+				'state_name': statename,
+				'service_name': servicename,
 			},
 			dataType: 'json',
 			success: function(res) {
@@ -290,7 +292,7 @@
 					$('#post_job_form_1').hide();
 					$('#post_job_form_2').show();
 				} else if (res.status == 1) {
-
+					alert('JOB Added');
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {

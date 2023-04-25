@@ -12,6 +12,7 @@ class Job extends CI_Controller
 		ss_login_check();
 		$this->config->load('stripe');
 		$this->load->model('SettingsModel');
+		$this->load->model('jobModel');
 	}
 	public function index()
 	{
@@ -137,10 +138,55 @@ class Job extends CI_Controller
 						);
 					}
 					// Payment was successful, process the order
-					$res = [
-						'status' => 1,
-						'msg' => $status
+
+					$where = ['id' => $_POST['state']];
+					$state_row = $this->multipleNeedsModel->get_any_table_row('states', $where);
+					$state_code = $state_row->Code;
+					$where2 = ['id' => $_POST['service']];
+					$service_row = $this->multipleNeedsModel->get_any_table_row('hcp_services', $where);
+					$service_name = $service_row->name;
+
+					$invoice_html = '<div><div><div>Service</div><div>Location</div><div>Date</div><div>Time</div><div>Amount</div></div><div><div><div>' . $service_name . '</div><div>' . $_POST['address'] . '(' . $state_code . ')</div><div>' . date('m/d/Y') . '</div><div>' . $_POST['time_from'] . '-' . $_POST['time_to'] . '</div><div>$' . $amountindoller . '</div></div></div><div>';
+
+					$invoice_file_name = $this->multipleNeedsModel->gen_pdf($invoice_html, JOB_INVOICE_PATH, 'F', 'HWBZ_JOB_invoice');
+
+					//save job to the database
+					$job_status = 0;
+					$job_id = 'HWBZ_JOB_' . logged_in_ss_row()->user_id . mt_rand(1000, 9999);
+
+					$job_data = [
+						'job_id' => $job_id,
+						'stripe_payment_id' => $payment_trans_id,
+						'ss_id' => logged_in_ss_row()->user_id,
+						'shift' => $_POST['time_from'] . '-' . $_POST['time_to'],
+						'service_id' => $_POST['service'],
+						'address' => $_POST['address'],
+						'city' => $_POST['city'],
+						'zip' => $_POST['zip'],
+						'state_id' => $_POST['state'],
+						'amount' => $amountindoller,
+						'invoice' => $invoice_file_name,
+						'status' => $job_status,
+						'created_at' => date('Y-m-d'),
 					];
+
+					$added_job_id = $this->jobModel->add($job_data);
+
+					if ($added_job_id !== false) {
+						$res = [
+							'status' => 1,
+							'msg' => $status
+						];
+					} else {
+						$res = [
+							'status' => 0,
+							'msg' => 'database error..!'
+						];
+					}
+					//save job to the database
+
+
+
 				} elseif ($status == 'requires_action') {
 					// Payment requires additional authentication, handle the authentication flow
 				} else {

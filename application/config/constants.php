@@ -109,5 +109,6 @@ define('ORG', 'USER-4');
 //upload file paths
 
 define('HCP_SIGNUP_DOCS', FCPATH . 'assets/uploads/hcp_signups');
+define('JOB_INVOICE_PATH', FCPATH . 'assets/job_invoices');
 
 //upload file paths
