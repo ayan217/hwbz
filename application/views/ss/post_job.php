@@ -277,7 +277,7 @@
 			success: function(res) {
 				if (res.status == 0) {
 					$('#error').html(res.msg);
-				} else if (res.status == 1) {
+				} else if (res.status == 2) {
 					$('#sdate').html('Date: ' + date);
 					$('#stime').html('Time: ' + time_from + ' - ' + time_to);
 					$('#sneeded').html('Service Needed: ' + servicename);
@@ -289,6 +289,8 @@
 					$('input[name="payment_amount"]').val(res.net_amount);
 					$('#post_job_form_1').hide();
 					$('#post_job_form_2').show();
+				} else if (res.status == 1) {
+
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {

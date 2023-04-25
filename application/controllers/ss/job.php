@@ -47,7 +47,7 @@ class Job extends CI_Controller
 					$net_amount = 0;
 				}
 				$res = [
-					'status' => 1,
+					'status' => 2,
 					'net_amount' => $net_amount
 				];
 			} else {
@@ -68,7 +68,8 @@ class Job extends CI_Controller
 
 			if ($this->form_validation->run() == TRUE) {
 				$res = array('val' => 1);
-				$amount = $this->input->post('payment_amount');
+				$amountindoller = $this->input->post('payment_amount');
+				$amount = $amountindoller * 100;
 				// Set up the Stripe API key and create a Stripe PaymentIntent object
 				\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
 				if ($this->input->post('card_id') == null) {
@@ -113,6 +114,7 @@ class Job extends CI_Controller
 
 				// Check the status of the payment intent
 				$status = $intent->status;
+				$payment_trans_id = $intent->id;
 
 				if ($status == 'succeeded') {
 					// If the "Save Card" checkbox was checked, save the card to the Stripe customer

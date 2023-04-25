@@ -33,10 +33,10 @@
 				</a>
 				<div class="collapse" id="ui-basic-2">
 					<ul class="nav flex-column sub-menu">
-						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>commission">Commission %</a></li>
-						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>ss-type">SS Type</a></li>
-						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>hcp-services">HCP Services</a></li>
-						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>hourly-rates">Hourly Rates</a></li>
+						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>commission">All</a></li>
+						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>ss-type">Open</a></li>
+						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>hcp-services">Pending</a></li>
+						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>hourly-rates">Completed</a></li>
 					</ul>
 				</div>
 			</li>
