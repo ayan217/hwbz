@@ -1,4 +1,7 @@
 <?php
+
+use Stripe\Customer;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 require_once(FCPATH . 'vendor/stripe/stripe-php/init.php');
 class Job extends CI_Controller
@@ -69,17 +72,17 @@ class Job extends CI_Controller
 				// Set up the Stripe API key and create a Stripe PaymentIntent object
 				\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
 				if ($this->input->post('card_id') == null) {
-				$intent = \Stripe\PaymentIntent::create([
-					'amount' => $amount, // the payment amount in cents
-					'currency' => 'usd', // the payment currency
-				]);
-			}else{
-				$intent = \Stripe\PaymentIntent::create([
-					'customer' => 'cus_NTZsxkgXTDh2yT', // the payment amount in cents
-					'amount' => $amount, // the payment amount in cents
-					'currency' => 'usd', // the payment currency
-				]);
-			}
+					$intent = \Stripe\PaymentIntent::create([
+						'amount' => $amount, // the payment amount in cents
+						'currency' => 'usd', // the payment currency
+					]);
+				} else {
+					$intent = \Stripe\PaymentIntent::create([
+						'customer' => logged_in_ss_row()->stripe_cust_id, // the payment amount in cents
+						'amount' => $amount, // the payment amount in cents
+						'currency' => 'usd', // the payment currency
+					]);
+				}
 				// Confirm the PaymentIntent by collecting payment details from the form
 				$card_holder_name = $this->input->post('card_holdername');
 				$card_number = $this->input->post('card_number');
@@ -114,20 +117,9 @@ class Job extends CI_Controller
 				if ($status == 'succeeded') {
 					// If the "Save Card" checkbox was checked, save the card to the Stripe customer
 					if ($this->input->post('save_stripe_card')) {
-						$customer = \Stripe\Customer::create([
-							'payment_method' => $payment_method->id,
-							'email' => logged_in_ss_row()->email, // replace with the customer's email address
-						]);
 
-						$card = $customer->sources->data[0];
-						$card_id = $card->id;
-						$cust_id = $customer->id;
-						$stripe_cust_id = [
-							'stripe_cust_id' => $cust_id
-						];
-						$this->userModel->update_user(logged_in_ss_row()->user_id, $stripe_cust_id);
-						// Save the card ID to the database or to the customer's account in your application
-						// ...
+					
+						
 					}
 					// Payment was successful, process the order
 					$res = [

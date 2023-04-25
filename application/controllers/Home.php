@@ -119,7 +119,8 @@ class Home extends CI_Controller
 						'msg' => 'Go Next.'
 					];
 				} else {
-					if ($inserted_user_id = $this->UserModel->add_user($data) !== false) {
+					$inserted_user_id = $this->UserModel->add_user($data);
+					if ($inserted_user_id !== false) {
 						//hcp file uploads
 						if ($user_type_raw == HCP) {
 							$hcp_fields = array('dl' => 'Driver\'s License or State ID', 'acl' => 'Active Professional License', 'abc' => 'Active BLS Card', 'covid' => 'Covid-19 Vaccine Card or exemption letter', 'phy' => 'Physical', 'tb' => 'TB test result or negative chest X-Ray', 'bc' => 'Background Check', 'ssc' => 'Social Security Card', 'fc' => 'Fire Card', 'pli' => 'Professional Liability Card');
@@ -160,10 +161,27 @@ class Home extends CI_Controller
 							}
 						}
 						//hcp file uploads
+
+						if ($user_type_raw == PATIENT || $user_type_raw == ORG) {
+							require_once(FCPATH . 'vendor/stripe/stripe-php/init.php');
+							$this->config->load('stripe');
+							\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
+
+							$customer = \Stripe\Customer::create([
+								'name' => $first_name . ' ' . $last_name,
+								'email' => $email,
+							]);
+
+							$cust_id = $customer->id;
+							$stripe_cust_id = [
+								'stripe_cust_id' => $cust_id
+							];
+							$this->UserModel->update_user($stripe_cust_id, $inserted_user_id);
+						}
 						$res = [
 							'status' => 1,
 							'msg' => 'User Added.',
-							'error' => $error
+							// 'error' => $error
 						];
 					} else {
 						$res = [

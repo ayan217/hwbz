@@ -119,7 +119,7 @@
 									foreach ($cards as $card) { ?>
 										<div>
 											<?php echo $card->brand . ' XXXX XXXX XXXX ' . $card->last4; ?>
-											<input type="radio" name="card_id" data-cust_id="" value="<?php echo $card->id; ?>">
+											<input type="radio" name="card_id" value="<?php echo $card->id; ?>">
 										</div>
 									<?php
 									}
