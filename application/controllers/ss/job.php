@@ -118,8 +118,21 @@ class Job extends CI_Controller
 					// If the "Save Card" checkbox was checked, save the card to the Stripe customer
 					if ($this->input->post('save_stripe_card')) {
 
-					
-						
+						$customer_id = logged_in_ss_row()->stripe_cust_id;
+
+						$token = \Stripe\Token::create([
+							'card' => [
+								'number' => $card_number,
+								'exp_month' => $expiry_month,
+								'exp_year' => $expiry_year,
+								'cvc' => $cvc,
+							],
+						]);
+
+						$card = \Stripe\Customer::createSource(
+							$customer_id,
+							['source' => $token]
+						);
 					}
 					// Payment was successful, process the order
 					$res = [
