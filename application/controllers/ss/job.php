@@ -234,4 +234,15 @@ class Job extends CI_Controller
 		$data['folder'] = 'ss';
 		$this->load->view('layout', $data);
 	}
+
+	public function refund()
+	{
+		$payment_id = $this->input->post('payment_id');
+
+		\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
+		$refund = \Stripe\Refund::create([
+			'payment_intent' => $payment_id,
+		]);
+		return $refund->status;
+	}
 }

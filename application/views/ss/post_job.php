@@ -296,8 +296,6 @@
 					$('input[name="payment_amount"]').val(res.net_amount);
 					$('#post_job_form_1').hide();
 					$('#post_job_form_2').show();
-				} else if (res.status == 1) {
-					alert('JOB Added');
 				}
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -318,8 +316,12 @@
 				processData: false,
 				data: new FormData(this),
 				type: 'post',
+				dataType: 'json',
 				success: function(result) {
-
+					if (result.status == 1) {
+						var success_url = '<?= base_url('ss/job/all') ?>';
+						window.location.replace(success_url);
+					}
 				},
 				error: function(result) {
 
