@@ -126,28 +126,21 @@ class Home extends CI_Controller
 							$hcp_fields = array('dl' => 'Driver\'s License or State ID', 'acl' => 'Active Professional License', 'abc' => 'Active BLS Card', 'covid' => 'Covid-19 Vaccine Card or exemption letter', 'phy' => 'Physical', 'tb' => 'TB test result or negative chest X-Ray', 'bc' => 'Background Check', 'ssc' => 'Social Security Card', 'fc' => 'Fire Card', 'pli' => 'Professional Liability Card');
 							$error = '';
 							foreach ($hcp_fields as $hcp_field => $field_name) {
-
 								if (!empty($_FILES[$hcp_field]['name'])) {
-
 									$_FILES['file']['name'] = $_FILES[$hcp_field]['name'];
 									$_FILES['file']['type'] = $_FILES[$hcp_field]['type'];
 									$_FILES['file']['tmp_name'] = $_FILES[$hcp_field]['tmp_name'];
 									$_FILES['file']['error'] = $_FILES[$hcp_field]['error'];
 									$_FILES['file']['size'] = $_FILES[$hcp_field]['size'];
-
 									$file_extension = pathinfo($_FILES[$hcp_field]['name'], PATHINFO_EXTENSION);
 									$filename = $inserted_user_id . '_' . $hcp_field . '_' . time() . '.' . $file_extension;
-
 									$uploadPath = HCP_SIGNUP_DOCS;
 									$config['upload_path'] = $uploadPath;
 									$config['allowed_types'] = '*';
 									$config['max_size'] = 0;
 									$config['file_name'] = $filename;
-
 									$this->upload->initialize($config);
-
 									if ($this->upload->do_upload('file')) {
-
 										$hcp_doc_data = [
 											'user_id' => $inserted_user_id,
 											'file' => $filename,
@@ -161,17 +154,14 @@ class Home extends CI_Controller
 							}
 						}
 						//hcp file uploads
-
 						if ($user_type_raw == PATIENT || $user_type_raw == ORG) {
 							require_once(FCPATH . 'vendor/stripe/stripe-php/init.php');
 							$this->config->load('stripe');
 							\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
-
 							$customer = \Stripe\Customer::create([
 								'name' => $first_name . ' ' . $last_name,
 								'email' => $email,
 							]);
-
 							$cust_id = $customer->id;
 							$stripe_cust_id = [
 								'stripe_cust_id' => $cust_id
@@ -269,5 +259,27 @@ class Home extends CI_Controller
 	{
 		$this->session->sess_destroy();
 		redirect('login', 'refresh');
+	}
+	public function upload_profile_photo()
+	{
+		$config['upload_path'] = UPLOAD_PROFILE_PICTURE . '/';
+		$config['allowed_types'] = 'gif|jpg|jpeg|png';
+		$config['max_size'] = 10000;
+		$config['overwrite'] = true;
+		// $file_extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+		$file_extension = 'jpg';
+		$filename = logged_in_ss_row()->user_id . '_' . logged_in_ss_row()->first_name . logged_in_ss_row()->last_name  . '_HWBZ_profile_picture.' . $file_extension;
+		$config['file_name'] = $filename;
+		$this->upload->initialize($config);
+		if (!$this->upload->do_upload('file')) {
+			$res = array('status' => 0);
+		} else {
+			$data = [
+				'profile_image' => $filename
+			];
+			$this->UserModel->update_user($data, logged_in_ss_row()->user_id);
+			$res = array('status' => 1);
+		}
+		echo json_encode($res);
 	}
 }

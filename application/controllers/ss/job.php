@@ -41,15 +41,27 @@ class Job extends CI_Controller
 			$this->form_validation->set_rules('service[]', 'Service', 'required');
 			$this->form_validation->set_rules('state', 'State', 'required');
 
+			// Create two DateTime objects representing the start and end times
+			$start_time = new DateTime($_POST['time_from']);
+			$end_time = new DateTime($_POST['time_to']);
+
+			// Subtract the end time from the start time
+			$interval = $start_time->diff($end_time);
+
+			// Get the interval as a formatted string (hours:minutes)
+			$interval_string = $interval->format('%H');
+
+			$hour = $interval_string;
 			if ($this->form_validation->run() == TRUE) {
-				$net_amount = 0;
+				$hour_rate = 0;
 				$services = $_POST['service'];
 				foreach ($services as $service) {
 
 					if ($this->SettingsModel->get_hourly_rate_by_service($service, $_POST['state']) !== false) {
-						$net_amount += $this->SettingsModel->get_hourly_rate_by_service($service, $_POST['state'])->amount;
+						$hour_rate += $this->SettingsModel->get_hourly_rate_by_service($service, $_POST['state'])->amount;
 					}
 				}
+				$net_amount = $hour_rate * $hour;
 				$res = [
 					'status' => 2,
 					'net_amount' => $net_amount
@@ -239,12 +251,15 @@ class Job extends CI_Controller
 	public function refund()
 	{
 		$payment_id = $this->input->post('payment_id');
+		$refund_amount = $this->input->post('refund_amount');
 
 		\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
+
 		$refund = \Stripe\Refund::create([
 			'payment_intent' => $payment_id,
+			'amount' => $refund_amount,
 		]);
+
 		return $refund->status;
 	}
-
 }

@@ -25,11 +25,7 @@
 	.half {
 		background-image: linear-gradient(to right, #07d358 50%, #ddd 50%);
 		/* gradient for half stars */
-	}
-
-	.empty {
-		/* no specific style for empty stars */
-	}
+	}	
 </style>
 <div class="content-wrapper">
 	<?php
@@ -50,10 +46,10 @@
 					<div class="d-flex">
 						<h4 class="card-title">My Jobs</h4>
 						<div>
-							<label for="">All<input type="radio"></label>
-							<label for="">Open<input type="radio"></label>
-							<label for="">Pending Approval<input type="radio"></label>
-							<label for="">Completed<input type="radio"></label>
+							<label for="all">All<input id="all" name="job_type" value="all" type="radio"></label>
+							<label for="open">Open<input id="open" name="job_type" value="open" type="radio"></label>
+							<label for="pending">Pending Approval<input id="pending" name="job_type" value="pending" type="radio"></label>
+							<label for="completed">Completed<input id="completed" name="job_type" value="completed" type="radio"></label>
 						</div>
 					</div>
 					<hr>

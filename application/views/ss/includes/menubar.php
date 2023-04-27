@@ -7,22 +7,52 @@
 		</div>
 		<div>
 			<a class="navbar-brand brand-logo" href="index.html">
-				<img src="<?=ASSET_URL?>templete/images/logo.svg" alt="logo" />
+				<img src="<?= SHOW_PROFILE_PICTURE . logged_in_ss_row()->profile_image ?>" alt="logo" />
 			</a>
 			<a class="navbar-brand brand-logo-mini" href="index.html">
-				<img src="<?=ASSET_URL?>templete/images/logo-mini.svg" alt="logo" />
+				<img src="<?= SHOW_PROFILE_PICTURE . logged_in_ss_row()->profile_image ?>" alt="logo" />
 			</a>
+			<button type="button" id="edit-icon">Edit Profile Picture</button>
+			<input type="file" id="file-upload" style="display:none;">
+			<script>
+				$(document).ready(function() {
+					$('#edit-icon').on('click', function() {
+						$('#file-upload').click();
+					});
+
+					$('#file-upload').on('change', function() {
+						var file_data = $('#file-upload').prop('files')[0];
+						var form_data = new FormData();
+						form_data.append('file', file_data);
+						var url = '<?= base_url('home/upload_profile_photo') ?>';
+						$.ajax({
+							url: url,
+							cache: false,
+							contentType: false,
+							processData: false,
+							data: form_data,
+							type: 'post',
+							dataType: 'json',
+							success: function(res) {
+								if (res.status == 1) {
+									window.location.reload();
+								}
+							}
+						});
+					});
+				});
+			</script>
 		</div>
 	</div>
 	<div class="navbar-menu-wrapper d-flex align-items-top">
 		<ul class="navbar-nav">
 			<li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-				<h1 class="welcome-text">Welcome, <span class="text-black fw-bold"><?=$user_data->first_name.' '.$user_data->last_name?></span></h1>
+				<h1 class="welcome-text">Welcome, <span class="text-black fw-bold"><?= $user_data->first_name . ' ' . $user_data->last_name ?></span></h1>
 				<h3 class="welcome-sub-text">Your performance summary this week </h3>
 			</li>
 		</ul>
 		<ul class="navbar-nav ms-auto">
-			
+
 			<li class="nav-item dropdown">
 				<a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
 					<i class="icon-bell"></i>
@@ -65,10 +95,10 @@
 			</li>
 			<li class="nav-item dropdown d-none d-lg-block user-dropdown">
 				<a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-					<img class="img-xs rounded-circle" src="<?=ASSET_URL?>templete/images/faces/face8.jpg" alt="Profile image"> </a>
+					<img class="img-xs rounded-circle" src="<?= ASSET_URL ?>templete/images/faces/face8.jpg" alt="Profile image"> </a>
 				<div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
 					<div class="dropdown-header text-center">
-						<img class="img-md rounded-circle" src="<?=ASSET_URL?>templete/images/faces/face8.jpg" alt="Profile image">
+						<img class="img-md rounded-circle" src="<?= ASSET_URL ?>templete/images/faces/face8.jpg" alt="Profile image">
 						<p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
 						<p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
 					</div>

@@ -28,7 +28,7 @@
 									<option value="0" selected disabled>Select</option>
 									<?php
 									for ($i = 0; $i < 24; $i++) {
-										for ($j = 0; $j < 60; $j += 30) {
+										for ($j = 0; $j < 60; $j += 60) {
 
 											$hour = str_pad($i % 24, 2, '0', STR_PAD_LEFT);
 											$minute = str_pad($j, 2, '0', STR_PAD_LEFT);
@@ -42,7 +42,7 @@
 									<option value="0" selected disabled>Select</option>
 									<?php
 									for ($i = 0; $i < 24; $i++) {
-										for ($j = 0; $j < 60; $j += 30) {
+										for ($j = 0; $j < 60; $j += 60) {
 
 											$hour = str_pad($i % 24, 2, '0', STR_PAD_LEFT);
 											$minute = str_pad($j, 2, '0', STR_PAD_LEFT);

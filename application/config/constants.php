@@ -110,5 +110,7 @@ define('ORG', 'USER-4');
 
 define('HCP_SIGNUP_DOCS', FCPATH . 'assets/uploads/hcp_signups');
 define('JOB_INVOICE_PATH', FCPATH . 'assets/job_invoices');
+define('UPLOAD_PROFILE_PICTURE', FCPATH . 'assets/uploads/profile_pictures');
+define('SHOW_PROFILE_PICTURE', ASSET_URL . 'uploads/profile_pictures/');
 
 //upload file paths
