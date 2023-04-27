@@ -31,6 +31,7 @@
 <script src="<?= ASSET_URL ?>templete/js/dashboard.js"></script>
 <script src="<?= ASSET_URL ?>templete/js/Chart.roundedBarCharts.js"></script>
 <!-- End custom js for this page-->
+<script src="<?= ASSET_URL ?>js/select2.min.js"></script>
 <script src="<?= ASSET_URL ?>templete/vendors/DataTables-1.13.4/js/jquery.dataTables.min"></script>
 </body>
 

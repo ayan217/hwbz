@@ -38,14 +38,17 @@ class Job extends CI_Controller
 			$this->form_validation->set_rules('address', 'Address', 'required');
 			$this->form_validation->set_rules('city', 'City', 'required');
 			$this->form_validation->set_rules('zip', 'Zip', 'required');
-			$this->form_validation->set_rules('service', 'Service', 'required');
+			$this->form_validation->set_rules('service[]', 'Service', 'required');
 			$this->form_validation->set_rules('state', 'State', 'required');
 
 			if ($this->form_validation->run() == TRUE) {
-				if ($this->SettingsModel->get_hourly_rate_by_service($_POST['service'], $_POST['state']) !== false) {
-					$net_amount = $this->SettingsModel->get_hourly_rate_by_service($_POST['service'], $_POST['state'])->amount;
-				} else {
-					$net_amount = 0;
+				$net_amount = 0;
+				$services = $_POST['service'];
+				foreach ($services as $service) {
+
+					if ($this->SettingsModel->get_hourly_rate_by_service($service, $_POST['state']) !== false) {
+						$net_amount += $this->SettingsModel->get_hourly_rate_by_service($service, $_POST['state'])->amount;
+					}
 				}
 				$res = [
 					'status' => 2,
@@ -142,11 +145,17 @@ class Job extends CI_Controller
 					$where = ['id' => $_POST['state']];
 					$state_row = $this->multipleNeedsModel->get_any_table_row('states', $where);
 					$state_code = $state_row->Code;
-					$where2 = ['id' => $_POST['service']];
-					$service_row = $this->multipleNeedsModel->get_any_table_row('hcp_services', $where);
-					$service_name = $service_row->name;
+					$services = $_POST['service'];
+					foreach ($services as $service) {
 
-					$invoice_html = '<div><div><div>Service</div><div>Location</div><div>Date</div><div>Time</div><div>Amount</div></div><div><div><div>' . $service_name . '</div><div>' . $_POST['address'] . '(' . $state_code . ')</div><div>' . date('m/d/Y') . '</div><div>' . $_POST['time_from'] . '-' . $_POST['time_to'] . '</div><div>$' . $amountindoller . '</div></div></div><div>';
+						$where2 = ['id' => $service];
+						$service_row = $this->multipleNeedsModel->get_any_table_row('hcp_services', $where2);
+
+						$service_names[] = $service_row->name;
+					}
+
+					$service_name = implode(', ', $service_names);
+					$invoice_html = '<div><div><div>Service(s)</div><div>Location</div><div>Date</div><div>Time</div><div>Amount</div></div><div><div><div>' . $service_name . '</div><div>' . $_POST['address'] . '(' . $state_code . ')</div><div>' . date('m/d/Y') . '</div><div>' . $_POST['time_from'] . '-' . $_POST['time_to'] . '</div><div>$' . $amountindoller . '</div></div></div><div>';
 
 					$invoice_file_name = $this->multipleNeedsModel->gen_pdf($invoice_html, JOB_INVOICE_PATH, 'F', 'HWBZ_JOB_invoice');
 
@@ -159,7 +168,7 @@ class Job extends CI_Controller
 						'stripe_payment_id' => $payment_trans_id,
 						'ss_id' => logged_in_ss_row()->user_id,
 						'shift' => $_POST['time_from'] . '-' . $_POST['time_to'],
-						'service_id' => $_POST['service'],
+						'service_ids' => implode(',', $_POST['service']),
 						'address' => $_POST['address'],
 						'city' => $_POST['city'],
 						'zip' => $_POST['zip'],
@@ -212,5 +221,17 @@ class Job extends CI_Controller
 		} else {
 			return true;
 		}
+	}
+
+	public function view_job($type)
+	{
+		if ($type == 'all') {
+
+			$data['title'] = 'HWBZ All Jobs';
+			$data['template'] = 'all_jobs';
+		}
+		$data['user_data'] = logged_in_ss_row();
+		$data['folder'] = 'ss';
+		$this->load->view('layout', $data);
 	}
 }

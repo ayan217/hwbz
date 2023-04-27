@@ -15,6 +15,8 @@
 	<link rel="stylesheet" href="<?= ASSET_URL ?>templete/vendors/css/vendor.bundle.base.css">
 	<link rel="stylesheet" href="<?= ASSET_URL ?>templete/css/vertical-layout-light/style.css">
 	<!-- endinject -->
+	<link rel="stylesheet" href="<?= ASSET_URL ?>css/select2.min.css">
+
 	<script src="<?= ASSET_URL . 'js/jquery-3.6.4.min.js' ?>"></script>
 </head>
 

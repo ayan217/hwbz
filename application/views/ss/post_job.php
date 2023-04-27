@@ -55,8 +55,8 @@
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail1">Service Needed</label>
-								<select name="service" class="form-control">
-									<option value="0" selected disabled>Select</option>
+								<select id="hcp_services" name="service[]" class="form-control select_services" multiple>
+									<!-- <option value="0" selected disabled>Select</option> -->
 									<?php
 									if (!empty($services)) {
 										foreach ($services as $service) {
@@ -250,9 +250,14 @@
 		var date = $('[name="date"]').val();
 		var time_from = $('[name="time_from"]').val();
 		var time_to = $('[name="time_to"]').val();
-		var service = $('[name="service"]').val();
-		var selectedservice = $('[name="service"] option:selected');
-		var servicename = selectedservice.html();
+
+		var services = $('#hcp_services').val();
+		var selectedServices = $('#hcp_services option:selected');
+		var serviceNames = [];
+		selectedServices.each(function() {
+			serviceNames.push($(this).html());
+		});
+
 		var address = $('[name="address"]').val();
 		var city = $('[name="city"]').val();
 		var state = $('[name="state"]').val();
@@ -267,13 +272,13 @@
 				'date': date,
 				'time_from': time_from,
 				'time_to': time_to,
-				'service': service,
+				'service': services,
 				'address': address,
 				'city': city,
 				'state': state,
 				'zip': zip,
 				'state_name': statename,
-				'service_name': servicename,
+				'service_name': serviceNames,
 			},
 			dataType: 'json',
 			success: function(res) {
@@ -282,7 +287,7 @@
 				} else if (res.status == 2) {
 					$('#sdate').html('Date: ' + date);
 					$('#stime').html('Time: ' + time_from + ' - ' + time_to);
-					$('#sneeded').html('Service Needed: ' + servicename);
+					$('#sneeded').html('Service Needed: ' + serviceNames.join(', '));
 					$('#saddress').html('Service Address: ' + address);
 					$('#scity').html('City: ' + city);
 					$('#sstate').html('State: ' + statename);
@@ -321,5 +326,10 @@
 				}
 			});
 		}));
+	});
+</script>
+<script>
+	$(document).ready(function() {
+		$('.select_services').select2();
 	});
 </script>
