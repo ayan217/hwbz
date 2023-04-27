@@ -262,4 +262,28 @@ class Job extends CI_Controller
 
 		return $refund->status;
 	}
+
+	public function cancel_job($job_id)
+	{
+		$job_row = $this->jobModel->get_the_job($job_id);
+		$date_string = $job_row->created_at;
+		$time_splits = explode('-', $job_row->shift);
+		$start_time_string = $time_splits[0];
+
+		// Create a DateTime object for the start time
+		$start_time = DateTime::createFromFormat('m/d/Y H:i', $date_string . ' ' . $start_time_string);
+
+		// Get the current time as a DateTime object
+		$current_time = new DateTime();
+
+		// Calculate the difference between the current time and the start time
+		$interval = $current_time->diff($start_time);
+
+		// Get the difference in hours and minutes
+		$hours = $interval->h;
+		$minutes = $interval->i;
+
+		// Output the difference in hours and minutes
+		echo "The difference between the current time and the start time is {$hours} hours and {$minutes} minutes.";
+	}
 }

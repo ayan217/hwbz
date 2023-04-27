@@ -25,7 +25,7 @@
 	.half {
 		background-image: linear-gradient(to right, #07d358 50%, #ddd 50%);
 		/* gradient for half stars */
-	}	
+	}
 </style>
 <div class="content-wrapper">
 	<?php
@@ -80,8 +80,9 @@
 										}
 										$service_names = implode(', ', $service_names_array);
 										if ($job->status == 0) {
+											$url = base_url('ss/cancel-job/' . $job->id);
 											$status = '<p>Open</p>';
-											$action = '<a href="javascript:void(0)" class="text-danger">Cancel</a>';
+											$action = '<a href="javascript:void(0)" onclick="window.location.href = \'' . $url . '\';" class="text-danger">Cancel</a>';
 										} elseif ($job->status == 1) {
 											$status = '<p class="text-success">Completed</p>';
 											$action = '<p class="text-success">- -</p>';

@@ -33,4 +33,19 @@ class jobModel extends CI_Model
 			return $query->result();
 		}
 	}
+	public function get_the_job($job_id)
+	{
+		$state_table = TABLE_PREFIX . 'states';
+		$this->db->select($this->table_name . '.*, ' . $state_table . '.Code');
+		$this->db->from($this->table_name);
+		$this->db->where($this->table_name . '.id', $job_id);
+		$this->db->join($state_table, $state_table . '.id = ' . $this->table_name . '.state_id', 'left');
+		$this->db->order_by('id', 'desc');
+		$query = $this->db->get();
+		if ($query->num_rows() == 0) {
+			return false;
+		} else {
+			return $query->row();
+		}
+	}
 }

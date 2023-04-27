@@ -61,6 +61,7 @@ $route['logout'] = 'Home/logout';
 $route['ss'] = 'ss/Dashboard';
 $route['ss/account-settings'] = 'ss/Profile/account_settings';
 $route['ss/job/(:any)'] = 'ss/Job/view_job/$1';
+$route['ss/cancel-job/(:num)'] = 'ss/Job/cancel_job/$1';
 //ss pages
 // admin pages
 $route['admin'] = 'admin/Login';
