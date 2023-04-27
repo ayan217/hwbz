@@ -70,6 +70,19 @@ class SettingsModel extends CI_Model
 			return $query->result();
 		}
 	}
+	public function get_hcp_service($id)
+	{
+		$table = TABLE_PREFIX . 'hcp_services';
+		$this->db->select();
+		$this->db->from($table);
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+		if ($query->num_rows() == 0) {
+			return false;
+		} else {
+			return $query->row();
+		}
+	}
 	public function update_hcp_service($id, $data)
 	{
 		$table = TABLE_PREFIX . 'hcp_services';

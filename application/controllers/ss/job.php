@@ -176,7 +176,7 @@ class Job extends CI_Controller
 						'amount' => $amountindoller,
 						'invoice' => $invoice_file_name,
 						'status' => $job_status,
-						'created_at' => date('Y-m-d'),
+						'created_at' => date('Y-m-d H:i:s'),
 					];
 
 					$added_job_id = $this->jobModel->add($job_data);
@@ -229,6 +229,7 @@ class Job extends CI_Controller
 
 			$data['title'] = 'HWBZ All Jobs';
 			$data['template'] = 'all_jobs';
+			$data['all_jobs'] = $this->jobModel->get_all_job();
 		}
 		$data['user_data'] = logged_in_ss_row();
 		$data['folder'] = 'ss';
@@ -245,4 +246,5 @@ class Job extends CI_Controller
 		]);
 		return $refund->status;
 	}
+
 }

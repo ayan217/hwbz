@@ -497,7 +497,10 @@ $config['compress_output'] = FALSE;
 | helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'local';
+// $config['time_reference'] = 'local';
+
+date_default_timezone_set('Asia/Kolkata');
+$config['time_reference'] = 'Asia/Kolkata';
 
 /*
 |--------------------------------------------------------------------------
