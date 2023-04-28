@@ -317,7 +317,8 @@ class Job extends CI_Controller
 					$one_hour_amount = $amount / $job_hours;
 					$cancelation_fee = $one_hour_amount * 2;
 					$refunded_amount = $amount - $cancelation_fee;
-					if ($this->refund($payment_id, $refunded_amount) == 'succeeded') {
+					$refunded_amount_in_cents = ($amount - $cancelation_fee) * 100;
+					if ($this->refund($payment_id, $refunded_amount_in_cents) == 'succeeded') {
 						$cancel_data = [
 							'cancel' => 1,
 							'cancelation_time' => date('Y-m-d H:i:s'),
