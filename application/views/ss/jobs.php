@@ -205,7 +205,7 @@
 					$('#invoice_date').html('Date: ' + res.invoice_date);
 					$('.amount').html('$' + res.amount);
 					$('#pdf_download_link').attr('href', res.pdf_download_link);
-					$('#total_text').html('<strong>Total (USD):</strong>' + res.amount_in_text);
+					$('#total_text').html('<strong>Total (USD): </strong>' + res.amount_in_text);
 					$('#jobinvoice').modal('show');
 				},
 				error: function(result) {

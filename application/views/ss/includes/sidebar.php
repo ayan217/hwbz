@@ -41,13 +41,13 @@
 				</div>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="<?= BASE_URL ?>ss">
+				<a class="nav-link" href="<?= BASE_URL ?>ss/calender">
 					<i class="mdi mdi-grid-large menu-icon"></i>
 					<span class="menu-title">Calender</span>
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="<?= BASE_URL ?>ss">
+				<a class="nav-link" href="<?= BASE_URL ?>ss/message">
 					<i class="mdi mdi-grid-large menu-icon"></i>
 					<span class="menu-title">Messages</span>
 				</a>
@@ -60,10 +60,8 @@
 				</a>
 				<div class="collapse" id="ui-basic-3">
 					<ul class="nav flex-column sub-menu">
-						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>commission">Commission %</a></li>
-						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>ss-type">SS Type</a></li>
-						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>hcp-services">HCP Services</a></li>
-						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>hourly-rates">Hourly Rates</a></li>
+						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>booking-history">Booking History</a></li>
+						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>payment-history">Payment History</a></li>
 					</ul>
 				</div>
 			</li>
