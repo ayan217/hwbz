@@ -117,7 +117,7 @@
 								?>
 										<tr>
 											<td><?= $job->job_id ?></td>
-											<td><?= date('m/d/Y', strtotime($job->created_at)) ?><br><?= $job->shift ?></td>
+											<td><?= date('m/d/Y', strtotime($job->job_date)) ?><br><?= $job->shift ?></td>
 											<td><?= $service_names ?></td>
 											<td><?= $job->city . ', ' . $job->Code ?></td>
 											<td>$<?= $job->amount ?></td>

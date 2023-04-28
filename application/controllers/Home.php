@@ -271,13 +271,13 @@ class Home extends CI_Controller
 		$config['file_name'] = $filename;
 		$this->upload->initialize($config);
 		if (!$this->upload->do_upload('file')) {
-			$res = array('status' => 0);
+			$res = array('status' => 0, 'msg' => $this->upload->display_errors());
 		} else {
 			$data = [
 				'profile_image' => $filename
 			];
 			$this->UserModel->update_user($data, logged_in_ss_row()->user_id);
-			$res = array('status' => 1);
+			$res = array('status' => 1, 'msg' => 'success');
 		}
 		echo json_encode($res);
 	}

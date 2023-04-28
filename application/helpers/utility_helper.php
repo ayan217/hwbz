@@ -45,3 +45,4 @@ function logged_in_ss_row()
 	$CI->load->model('UserModel');
 	return $CI->UserModel->getss($ss_id);
 }
+

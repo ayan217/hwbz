@@ -9,7 +9,7 @@
 	// 	});
 	// });
 </script>
-<script src="<?= ASSET_URL . 'js/general_custom.js' ?>"></script>
+
 <!-- plugins:js -->
 <script src="<?= ASSET_URL ?>templete/vendors/js/vendor.bundle.base.js"></script>
 <!-- endinject -->

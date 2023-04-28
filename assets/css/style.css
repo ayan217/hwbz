@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Play&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+
+@font-face {
+    font-family: "Play-Bold";
+    src: url(../fonts/Play-Bold.ttf);
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+a{
+    font-family: 'Play', sans-serif; 
+}
+h1 ,h2,h3,h4,h5,h6{
+    font-family: "Play-Bold"; 
+}
+
+.navbtns {
+    margin-left: 30px;
+  }
+  nav {
+    padding-left: 150px;
+    padding-right: 150px;
+    padding-top: 40px;
+  }
+  .navlinks {
+    text-decoration: none;
+  }
+
+
+  .navbtns-maindiv {
+    padding-top: 27px;
+    font-family: 'Play', sans-serif;
+  }
+
+  .primary-btn:hover {
+    transition: 0.3s;
+    background: #35b1ff;
+    color: #fff;
+  }
+  .navlinks {
+    font-size: 18px;
+    color: #0c2331;
+  }
+  .primary-btn {
+    background: #2d90ce;
+    color: #fff !important;
+    padding: 20px 50px;
+    border-radius: 30px;
+    font-size: 18px;
+    transition: 0.3s;
+font-weight: 600  ;
+font-family: 'Play', sans-serif;
+  }
+  .bannertext {
+    color: #0c2331;
+    font-size: 65px;
+  }
+
+  .bannertext {
+    width: 778px;
+  }
+  .homebanner {
+    padding-left: 150px;
+    padding-top: 101px;
+  }

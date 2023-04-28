@@ -14,6 +14,19 @@ class Job extends CI_Controller
 		$this->load->model('SettingsModel');
 		$this->load->model('jobModel');
 	}
+	function get_hour_diff($start, $end)
+	{
+		$start_time = new DateTime($start);
+		$end_time = new DateTime($end);
+
+		// Subtract the end time from the start time
+		$interval = $start_time->diff($end_time);
+
+		// Get the interval as a formatted string (hours:minutes)
+		$interval_string = $interval->format('%H');
+
+		return $interval_string;
+	}
 	public function index()
 	{
 		$this->load->model('SettingsModel');
@@ -42,15 +55,8 @@ class Job extends CI_Controller
 			$this->form_validation->set_rules('state', 'State', 'required');
 
 			// Create two DateTime objects representing the start and end times
-			$start_time = new DateTime($_POST['time_from']);
-			$end_time = new DateTime($_POST['time_to']);
 
-			// Subtract the end time from the start time
-			$interval = $start_time->diff($end_time);
-
-			// Get the interval as a formatted string (hours:minutes)
-			$interval_string = $interval->format('%H');
-
+			$interval_string = $this->get_hour_diff($_POST['time_from'], $_POST['time_to']);
 			$hour = $interval_string;
 			if ($this->form_validation->run() == TRUE) {
 				$hour_rate = 0;
@@ -167,7 +173,7 @@ class Job extends CI_Controller
 					}
 
 					$service_name = implode(', ', $service_names);
-					$invoice_html = '<div><div><div>Service(s)</div><div>Location</div><div>Date</div><div>Time</div><div>Amount</div></div><div><div><div>' . $service_name . '</div><div>' . $_POST['address'] . '(' . $state_code . ')</div><div>' . date('m/d/Y') . '</div><div>' . $_POST['time_from'] . '-' . $_POST['time_to'] . '</div><div>$' . $amountindoller . '</div></div></div><div>';
+					$invoice_html = '<div><div><div>Service(s)</div><div>Location</div><div>Date</div><div>Time</div><div>Amount</div></div><div><div><div>' . $service_name . '</div><div>' . $_POST['address'] . '(' . $state_code . ')</div><div>' . date('m/d/Y', strtotime($_POST['date'])) . '</div><div>' . $_POST['time_from'] . '-' . $_POST['time_to'] . '</div><div>$' . $amountindoller . '</div></div></div><div>';
 
 					$invoice_file_name = $this->multipleNeedsModel->gen_pdf($invoice_html, JOB_INVOICE_PATH, 'F', 'HWBZ_JOB_invoice');
 
@@ -187,6 +193,7 @@ class Job extends CI_Controller
 						'state_id' => $_POST['state'],
 						'amount' => $amountindoller,
 						'invoice' => $invoice_file_name,
+						'job_date' => $_POST['date'],
 						'status' => $job_status,
 						'created_at' => date('Y-m-d H:i:s'),
 					];
@@ -248,17 +255,20 @@ class Job extends CI_Controller
 		$this->load->view('layout', $data);
 	}
 
-	public function refund()
+	public function refund($payment_id, $refund_amount = null)
 	{
-		$payment_id = $this->input->post('payment_id');
-		$refund_amount = $this->input->post('refund_amount');
 
 		\Stripe\Stripe::setApiKey($this->config->item('stripe_secret_key'));
-
-		$refund = \Stripe\Refund::create([
-			'payment_intent' => $payment_id,
-			'amount' => $refund_amount,
-		]);
+		if ($refund_amount !== null) {
+			$refund = \Stripe\Refund::create([
+				'payment_intent' => $payment_id,
+				'amount' => $refund_amount,
+			]);
+		} else {
+			$refund = \Stripe\Refund::create([
+				'payment_intent' => $payment_id,
+			]);
+		}
 
 		return $refund->status;
 	}
@@ -266,24 +276,69 @@ class Job extends CI_Controller
 	public function cancel_job($job_id)
 	{
 		$job_row = $this->jobModel->get_the_job($job_id);
-		$date_string = $job_row->created_at;
+
+		$payment_id = $job_row->stripe_payment_id;
+		$amount = $job_row->amount;
+
+		$date_string = $job_row->job_date;
 		$time_splits = explode('-', $job_row->shift);
-		$start_time_string = $time_splits[0];
+		$start_time_string = trim($time_splits[0]);
+		$end_time_ending = trim($time_splits[1]);
 
-		// Create a DateTime object for the start time
-		$start_time = DateTime::createFromFormat('m/d/Y H:i', $date_string . ' ' . $start_time_string);
+		$start_time = DateTime::createFromFormat('Y-m-d H:i:s', $date_string . ' ' . $start_time_string . ':00');
 
-		// Get the current time as a DateTime object
 		$current_time = new DateTime();
+		$diff_hours = round(($start_time->getTimestamp() - $current_time->getTimestamp()) / 3600);
 
-		// Calculate the difference between the current time and the start time
-		$interval = $current_time->diff($start_time);
-
-		// Get the difference in hours and minutes
-		$hours = $interval->h;
-		$minutes = $interval->i;
-
-		// Output the difference in hours and minutes
-		echo "The difference between the current time and the start time is {$hours} hours and {$minutes} minutes.";
+		if ($start_time > $current_time) {
+			// echo "The difference between the start time and the current time is {$diff_hours} hours.";
+			$ss_type = 'USER-' . logged_in_ss_row()->acc_type;
+			if ($ss_type == PATIENT) {
+				if ($diff_hours >= 8) {
+					if ($this->refund($payment_id) == 'succeeded') {
+						$cancel_data = [
+							'cancel' => 1,
+							'cancelation_time' => date('Y-m-d H:i:s'),
+							'refunded_amount' => $amount,
+						];
+						if ($this->jobModel->update_job($cancel_data, $job_id) == true) {
+							$this->session->set_flashdata('log_suc', 'Job Canceled');
+							redirect($_SERVER['HTTP_REFERER'], 'refresh');
+						} else {
+							$this->session->set_flashdata('log_err', 'Database Error..!!');
+							redirect($_SERVER['HTTP_REFERER'], 'refresh');
+						}
+					} else {
+						$this->session->set_flashdata('log_err', 'Refund Failed..!!');
+						redirect($_SERVER['HTTP_REFERER'], 'refresh');
+					}
+				} elseif ($diff_hours < 8) {
+					$job_hours = $this->get_hour_diff($start_time_string, $end_time_ending);
+					$one_hour_amount = $amount / $job_hours;
+					$cancelation_fee = $one_hour_amount * 2;
+					$refunded_amount = $amount - $cancelation_fee;
+					if ($this->refund($payment_id, $refunded_amount) == 'succeeded') {
+						$cancel_data = [
+							'cancel' => 1,
+							'cancelation_time' => date('Y-m-d H:i:s'),
+							'refunded_amount' => $refunded_amount,
+						];
+						if ($this->jobModel->update_job($cancel_data, $job_id) == true) {
+							$this->session->set_flashdata('log_suc', 'Job Canceled');
+							redirect($_SERVER['HTTP_REFERER'], 'refresh');
+						} else {
+							$this->session->set_flashdata('log_err', 'Database Error..!!');
+							redirect($_SERVER['HTTP_REFERER'], 'refresh');
+						}
+					} else {
+						$this->session->set_flashdata('log_err', 'Refund Failed..!!');
+						redirect($_SERVER['HTTP_REFERER'], 'refresh');
+					}
+				}
+			} elseif ($ss_type == ORG) {
+			}
+		} else {
+			echo "The start time has already passed.";
+		}
 	}
 }

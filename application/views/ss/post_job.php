@@ -20,7 +20,7 @@
 						<div id="post_job_form_1">
 							<div class="form-group">
 								<label for="exampleInputUsername1">Date</label>
-								<input required type="date" class="form-control" name="date" placeholder="" value="<?= date('Y-m-d') ?>">
+								<input required type="date" class="form-control" name="date" placeholder="" value="<?= date('Y-m-d', strtotime('+1 day')) ?>" min="<?= date('Y-m-d', strtotime('+1 day')) ?>">
 							</div>
 							<div class="form-group">
 								<label for="exampleInputEmail1">Time/Shift</label>
