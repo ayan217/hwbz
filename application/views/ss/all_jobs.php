@@ -94,10 +94,7 @@
 
 												$rating = $job->rating;
 												$rating_div = '';
-												// Round the rating value to the nearest half star
 												$rounded_rating = round($rating * 2) / 2;
-
-												// Output the rating as HTML stars
 												$rating_div .= '<div class="rating">';
 												for ($i = 1; $i <= 5; $i++) {
 													if ($i <= $rounded_rating) {
