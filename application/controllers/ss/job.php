@@ -294,52 +294,55 @@ class Job extends CI_Controller
 			// echo "The difference between the start time and the current time is {$diff_hours} hours.";
 			$ss_type = 'USER-' . logged_in_ss_row()->acc_type;
 			if ($ss_type == PATIENT) {
-				if ($diff_hours >= 8) {
-					if ($this->refund($payment_id) == 'succeeded') {
-						$cancel_data = [
-							'cancel' => 1,
-							'cancelation_time' => date('Y-m-d H:i:s'),
-							'refunded_amount' => $amount,
-						];
-						if ($this->jobModel->update_job($cancel_data, $job_id) == true) {
-							$this->session->set_flashdata('log_suc', 'Job Canceled');
-							redirect($_SERVER['HTTP_REFERER'], 'refresh');
-						} else {
-							$this->session->set_flashdata('log_err', 'Database Error..!!');
-							redirect($_SERVER['HTTP_REFERER'], 'refresh');
-						}
-					} else {
-						$this->session->set_flashdata('log_err', 'Refund Failed..!!');
-						redirect($_SERVER['HTTP_REFERER'], 'refresh');
-					}
-				} elseif ($diff_hours < 8) {
-					$job_hours = $this->get_hour_diff($start_time_string, $end_time_ending);
-					$one_hour_amount = $amount / $job_hours;
-					$cancelation_fee = $one_hour_amount * 2;
-					$refunded_amount = $amount - $cancelation_fee;
-					$refunded_amount_in_cents = ($amount - $cancelation_fee) * 100;
-					if ($this->refund($payment_id, $refunded_amount_in_cents) == 'succeeded') {
-						$cancel_data = [
-							'cancel' => 1,
-							'cancelation_time' => date('Y-m-d H:i:s'),
-							'refunded_amount' => $refunded_amount,
-						];
-						if ($this->jobModel->update_job($cancel_data, $job_id) == true) {
-							$this->session->set_flashdata('log_suc', 'Job Canceled');
-							redirect($_SERVER['HTTP_REFERER'], 'refresh');
-						} else {
-							$this->session->set_flashdata('log_err', 'Database Error..!!');
-							redirect($_SERVER['HTTP_REFERER'], 'refresh');
-						}
-					} else {
-						$this->session->set_flashdata('log_err', 'Refund Failed..!!');
-						redirect($_SERVER['HTTP_REFERER'], 'refresh');
-					}
-				}
+				$canceletion_fee_hour = 8;
 			} elseif ($ss_type == ORG) {
+				$canceletion_fee_hour = 24;
+			}
+			if ($diff_hours >= $canceletion_fee_hour) {
+				if ($this->refund($payment_id) == 'succeeded') {
+					$cancel_data = [
+						'cancel' => 1,
+						'cancelation_time' => date('Y-m-d H:i:s'),
+						'refunded_amount' => $amount,
+					];
+					if ($this->jobModel->update_job($cancel_data, $job_id) == true) {
+						$this->session->set_flashdata('log_suc', 'Job Canceled');
+						redirect($_SERVER['HTTP_REFERER'], 'refresh');
+					} else {
+						$this->session->set_flashdata('log_err', 'Database Error..!!');
+						redirect($_SERVER['HTTP_REFERER'], 'refresh');
+					}
+				} else {
+					$this->session->set_flashdata('log_err', 'Refund Failed..!!');
+					redirect($_SERVER['HTTP_REFERER'], 'refresh');
+				}
+			} elseif ($diff_hours < $canceletion_fee_hour) {
+				$job_hours = $this->get_hour_diff($start_time_string, $end_time_ending);
+				$one_hour_amount = $amount / $job_hours;
+				$cancelation_fee = $one_hour_amount * 2;
+				$refunded_amount = $amount - $cancelation_fee;
+				$refunded_amount_in_cents = ($amount - $cancelation_fee) * 100;
+				if ($this->refund($payment_id, $refunded_amount_in_cents) == 'succeeded') {
+					$cancel_data = [
+						'cancel' => 1,
+						'cancelation_time' => date('Y-m-d H:i:s'),
+						'refunded_amount' => $refunded_amount,
+					];
+					if ($this->jobModel->update_job($cancel_data, $job_id) == true) {
+						$this->session->set_flashdata('log_suc', 'Job Canceled');
+						redirect($_SERVER['HTTP_REFERER'], 'refresh');
+					} else {
+						$this->session->set_flashdata('log_err', 'Database Error..!!');
+						redirect($_SERVER['HTTP_REFERER'], 'refresh');
+					}
+				} else {
+					$this->session->set_flashdata('log_err', 'Refund Failed..!!');
+					redirect($_SERVER['HTTP_REFERER'], 'refresh');
+				}
 			}
 		} else {
-			echo "The start time has already passed.";
+			$this->session->set_flashdata('log_err', 'The start time has already passed..!!');
+			redirect($_SERVER['HTTP_REFERER'], 'refresh');
 		}
 	}
 }
