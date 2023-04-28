@@ -19,12 +19,15 @@ class jobModel extends CI_Model
 			return false;
 		}
 	}
-	public function get_all_job()
+	public function get_jobs($type = null)
 	{
 		$state_table = TABLE_PREFIX . 'states';
 		$this->db->select($this->table_name . '.*, ' . $state_table . '.Code');
 		$this->db->from($this->table_name);
 		$this->db->join($state_table, $state_table . '.id = ' . $this->table_name . '.state_id', 'left');
+		if ($type !== null) {
+			$this->db->where($this->table_name . '.status', $type);
+		}
 		$this->db->where($this->table_name . '.cancel', 0);
 		$this->db->order_by('id', 'desc');
 		$query = $this->db->get();

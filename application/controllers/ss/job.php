@@ -247,9 +247,19 @@ class Job extends CI_Controller
 		if ($type == 'all') {
 
 			$data['title'] = 'HWBZ All Jobs';
-			$data['template'] = 'all_jobs';
-			$data['all_jobs'] = $this->jobModel->get_all_job();
+			$data['jobs'] = $this->jobModel->get_jobs();
+		} elseif ($type == 'open') {
+			$data['title'] = 'HWBZ Open Jobs';
+			$data['jobs'] = $this->jobModel->get_jobs(0);
+		} elseif ($type == 'pending') {
+			$data['title'] = 'HWBZ Pending Jobs';
+			$data['jobs'] = $this->jobModel->get_jobs(2);
+		} elseif ($type == 'completed') {
+			$data['title'] = 'HWBZ Completed Jobs';
+			$data['jobs'] = $this->jobModel->get_jobs(1);
 		}
+		$data['template'] = 'jobs';
+		$data['type'] = $type;
 		$data['user_data'] = logged_in_ss_row();
 		$data['folder'] = 'ss';
 		$this->load->view('layout', $data);

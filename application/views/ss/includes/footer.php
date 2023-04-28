@@ -1,6 +1,14 @@
 </div>
 </div>
 <script>
+	$(document).ready(function() {
+		$('input[name="job_type"]').click(function() {
+			var val = $(this).val();
+			var url = '<?= base_url('ss/job/') ?>' + val;
+			window.location.replace(url);
+		});
+	});
+
 	// $(document).ready(function() {
 	// 	$('#example').DataTable({
 	// 		"searching": false,

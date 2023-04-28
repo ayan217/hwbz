@@ -46,10 +46,10 @@
 					<div class="d-flex">
 						<h4 class="card-title">My Jobs</h4>
 						<div>
-							<label for="all">All<input id="all" name="job_type" value="all" type="radio"></label>
-							<label for="open">Open<input id="open" name="job_type" value="open" type="radio"></label>
-							<label for="pending">Pending Approval<input id="pending" name="job_type" value="pending" type="radio"></label>
-							<label for="completed">Completed<input id="completed" name="job_type" value="completed" type="radio"></label>
+							<label for="all">All<input <?= $type == 'all' ? 'checked' : '' ?> id="all" name="job_type" value="all" type="radio"></label>
+							<label for="open">Open<input <?= $type == 'open' ? 'checked' : '' ?> id="open" name="job_type" value="open" type="radio"></label>
+							<label for="pending">Pending Approval<input <?= $type == 'pending' ? 'checked' : '' ?> id="pending" name="job_type" value="pending" type="radio"></label>
+							<label for="completed">Completed<input <?= $type == 'completed' ? 'checked' : '' ?> id="completed" name="job_type" value="completed" type="radio"></label>
 						</div>
 					</div>
 					<hr>
@@ -70,8 +70,8 @@
 							</thead>
 							<tbody>
 								<?php
-								if (!empty($all_jobs)) {
-									foreach ($all_jobs as $job) {
+								if (!empty($jobs)) {
+									foreach ($jobs as $job) {
 										$service_names_array = array();
 										$this->load->model('SettingsModel');
 										$service_ids = explode(',', $job->service_ids);

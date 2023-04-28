@@ -60,9 +60,23 @@ font-family: 'Play', sans-serif;
   }
 
   .bannertext {
-    width: 778px;
+    width: 734px;
+  }
+  .images {
+    width: 100%;
   }
   .homebanner {
     padding-left: 150px;
     padding-top: 101px;
+    padding-right: 100px;
+  }
+  .mainimgs {
+    width: 100%;
+    margin-top: -80px;
+  }
+
+  .abs {
+    position: absolute;
+    z-index: -1;
+    top: 0;
   }
