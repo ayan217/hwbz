@@ -3,6 +3,14 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 
+function number_to_words($num)
+{
+	require_once FCPATH . 'vendor/autoload.php';
+
+	$numberToWords = new \NumberToWords\NumberToWords();
+	$numberTransformer = $numberToWords->getNumberTransformer('en');
+	return ucwords(strtolower($numberTransformer->toWords($num)));
+}
 
 function user_login_check()
 {
@@ -45,4 +53,3 @@ function logged_in_ss_row()
 	$CI->load->model('UserModel');
 	return $CI->UserModel->getss($ss_id);
 }
-

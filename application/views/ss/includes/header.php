@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="<?= ASSET_URL ?>templete/vendors/simple-line-icons/css/simple-line-icons.css">
 	<link rel="stylesheet" href="<?= ASSET_URL ?>templete/vendors/css/vendor.bundle.base.css">
 	<link rel="stylesheet" href="<?= ASSET_URL ?>templete/css/vertical-layout-light/style.css">
+	<link rel="stylesheet" href="<?= ASSET_URL ?>fontawesome/css/all.min.css">
 	<!-- endinject -->
 	<link rel="stylesheet" href="<?= ASSET_URL ?>css/select2.min.css">
 

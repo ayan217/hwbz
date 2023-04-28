@@ -264,7 +264,40 @@ class Job extends CI_Controller
 		$data['folder'] = 'ss';
 		$this->load->view('layout', $data);
 	}
+	public function view_invoice($job_id)
+	{
+		$job_row = $this->jobModel->get_the_job($job_id);
+		$services = explode(',', $job_row->service_ids);
+		foreach ($services as $service) {
 
+			$where = ['id' => $service];
+			$service_row = $this->multipleNeedsModel->get_any_table_row('hcp_services', $where);
+
+			$service_names[] = $service_row->name;
+		}
+		$amount_in_text = number_to_words($job_row->amount);
+
+		$dateStr = $job_row->created_at;
+		$dateObj = DateTime::createFromFormat('Y-m-d H:i:s', $dateStr);
+		$invoice_date = $dateObj->format('F d, Y');
+
+		$pdf_download_link = DOWNLOAD_JOB_INVOICE_PATH . $job_row->invoice;
+
+		$service_name = implode(', ', $service_names);
+		$res = [
+			'services' => $service_name,
+			'location' => $job_row->city . ', ' . $job_row->Code,
+			'date' => date('m/d/Y', strtotime($job_row->job_date)),
+			'time' => $job_row->shift,
+			'amount' => $job_row->amount,
+			'amount_in_text' => $amount_in_text,
+			'invoice_id' => $job_row->stripe_payment_id,
+			'invoice_date' => $invoice_date,
+			'pdf_download_link' => $pdf_download_link,
+
+		];
+		echo json_encode($res);
+	}
 	public function refund($payment_id, $refund_amount = null)
 	{
 

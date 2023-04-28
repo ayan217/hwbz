@@ -114,3 +114,8 @@ define('UPLOAD_PROFILE_PICTURE', FCPATH . 'assets/uploads/profile_pictures');
 define('SHOW_PROFILE_PICTURE', ASSET_URL . 'uploads/profile_pictures/');
 
 //upload file paths
+//download file paths
+
+define('DOWNLOAD_JOB_INVOICE_PATH', ASSET_URL . 'job_invoices/');
+
+//download file paths

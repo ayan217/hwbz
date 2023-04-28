@@ -117,7 +117,10 @@
 											<td><?= date('m/d/Y', strtotime($job->job_date)) ?><br><?= $job->shift ?></td>
 											<td><?= $service_names ?></td>
 											<td><?= $job->city . ', ' . $job->Code ?></td>
-											<td>$<?= $job->amount ?></td>
+											<td>
+												$<?= $job->amount ?>
+												<a href="javascript:void(0)" class="view_invoice" data-job_id="<?= $job->id ?>"><i class="fa-regular fa-file-pdf"></i></a>
+											</td>
 											<td><?= $job->hcp_id == null ? '- -' : 'HCP_NAME' ?></td>
 											<td><?= $job->time_sheet_id == null ? '- -' : 'TIME_SHEET' ?></td>
 											<td><?= $status ?></td>
@@ -137,3 +140,78 @@
 		</div>
 	</div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="jobinvoice" tabindex="-1" role="dialog" aria-labelledby="jobinvoiceLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="jobinvoiceLabel">Invoice</h5>
+				<span id="invoice_id"></span>
+				<span id="invoice_date"></span>
+			</div>
+			<div class="modal-body">
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Service</th>
+								<th>Location</th>
+								<th>Date</th>
+								<th>Time</th>
+								<th>Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td id="services"></td>
+								<td id="location"></td>
+								<td id="date"></td>
+								<td id="time"></td>
+								<td class="amount"></td>
+							</tr>
+							<tr>
+								<td colspan="4" id="total_text"></td>
+								<td class="amount"></td>
+							</tr>
+						</tbody>
+					</table>
+					<span>This is a computer generated invoice. No signature required.</span>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a id='pdf_download_link' type="button" class="btn btn-primary" download>Download PDF</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('input[name="job_type"]').click(function() {
+			var val = $(this).val();
+			var url = '<?= base_url('ss/job/') ?>' + val;
+			window.location.replace(url);
+		});
+		$('.view_invoice').click(function() {
+			var job_id = $(this).data('job_id');
+			$.ajax({
+				url: '<?= base_url('ss/Job/view_invoice/') ?>' + job_id,
+				dataType: 'json',
+				success: function(res) {
+					$('#services').html(res.services);
+					$('#location').html(res.location);
+					$('#date').html(res.date);
+					$('#time').html(res.time);
+					$('#invoice_id').html('#' + res.invoice_id);
+					$('#invoice_date').html('Date: ' + res.invoice_date);
+					$('.amount').html('$' + res.amount);
+					$('#pdf_download_link').attr('href', res.pdf_download_link);
+					$('#total_text').html('<strong>Total (USD):</strong>' + res.amount_in_text);
+					$('#jobinvoice').modal('show');
+				},
+				error: function(result) {
+
+				}
+			});
+		})
+	});
+</script>
