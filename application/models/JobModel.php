@@ -21,6 +21,7 @@ class jobModel extends CI_Model
 	}
 	public function get_jobs($type = null)
 	{
+		$user_id = logged_in_ss_row()->user_id;
 		$state_table = TABLE_PREFIX . 'states';
 		$this->db->select($this->table_name . '.*, ' . $state_table . '.Code');
 		$this->db->from($this->table_name);
@@ -29,6 +30,7 @@ class jobModel extends CI_Model
 			$this->db->where($this->table_name . '.status', $type);
 		}
 		$this->db->where($this->table_name . '.cancel', 0);
+		$this->db->where($this->table_name . '.ss_id', $user_id);
 		$this->db->order_by('id', 'desc');
 		$query = $this->db->get();
 		if ($query->num_rows() == 0) {
