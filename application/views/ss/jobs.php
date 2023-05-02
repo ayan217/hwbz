@@ -79,36 +79,41 @@
 											$service_names_array[] = $this->SettingsModel->get_hcp_service($service_id)->name;
 										}
 										$service_names = implode(', ', $service_names_array);
-										if ($job->status == 0) {
-											$url = base_url('ss/cancel-job/' . $job->id);
-											$status = '<p>Open</p>';
-											$action = '<a href="javascript:void(0)" onclick="window.location.href = \'' . $url . '\';" class="text-danger">Cancel</a>';
-										} elseif ($job->status == 1) {
-											$status = '<p class="text-success">Completed</p>';
-											$action = '<p class="text-success">- -</p>';
-										} elseif ($job->status == 2) {
-											$status = '<button type="button" class="btn btn-outline-success btn-fw">Approve</button>';
-											if ($job->rating == null) {
-												$status = '<button type="button" class="btn btn-outline-warning btn-fw">Review</button>';
-											} else {
+										if ($job->cancel == 0) {
+											if ($job->status == 0) {
+												$url = base_url('ss/cancel-job/' . $job->id);
+												$status = '<p>Open</p>';
+												$action = '<a href="javascript:void(0)" onclick="window.location.href = \'' . $url . '\';" class="text-danger">Cancel</a>';
+											} elseif ($job->status == 1) {
+												$status = '<p class="text-success">Completed</p>';
+												$action = '<p class="text-success">- -</p>';
+											} elseif ($job->status == 2) {
+												$status = '<button type="button" class="btn btn-outline-success btn-fw">Approve</button>';
+												if ($job->rating == null) {
+													$status = '<button type="button" class="btn btn-outline-warning btn-fw">Review</button>';
+												} else {
 
-												$rating = $job->rating;
-												$rating_div = '';
-												$rounded_rating = round($rating * 2) / 2;
-												$rating_div .= '<div class="rating">';
-												for ($i = 1; $i <= 5; $i++) {
-													if ($i <= $rounded_rating) {
-														$rating_div .= '<span class="star full"></span>';
-													} else if ($i == ceil($rounded_rating) && $rounded_rating != floor($rounded_rating)) {
-														$rating_div .= '<span class="star half"></span>';
-													} else {
-														$rating_div .= '<span class="star empty"></span>';
+													$rating = $job->rating;
+													$rating_div = '';
+													$rounded_rating = round($rating * 2) / 2;
+													$rating_div .= '<div class="rating">';
+													for ($i = 1; $i <= 5; $i++) {
+														if ($i <= $rounded_rating) {
+															$rating_div .= '<span class="star full"></span>';
+														} else if ($i == ceil($rounded_rating) && $rounded_rating != floor($rounded_rating)) {
+															$rating_div .= '<span class="star half"></span>';
+														} else {
+															$rating_div .= '<span class="star empty"></span>';
+														}
 													}
-												}
-												$rating_div .= '</div>';
+													$rating_div .= '</div>';
 
-												$action = $rating_div;
+													$action = $rating_div;
+												}
 											}
+										}else{
+											$status = '<p class="text-danger">Cancelled</p>';
+											$action = '- -';
 										}
 
 								?>

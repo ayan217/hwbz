@@ -36,6 +36,11 @@
 
 		});
 		calendar.render();
+		var yearFilter = document.getElementById('year-filter');
+		yearFilter.addEventListener('change', function() {
+			var year = yearFilter.value;
+			calendar.gotoDate(year);
+		});
 	});
 </script>
 <div class="content-wrapper">

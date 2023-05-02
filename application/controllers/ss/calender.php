@@ -21,11 +21,15 @@ class calender extends CI_Controller
 	{
 		$all_jobs = $this->jobModel->get_jobs();
 		foreach ($all_jobs as $job) {
-			if ($job->status == 0) {
-				$background = '#f78628';
-			} elseif ($job->status == 1) {
-				$background = '#07d358';
-			} elseif ($job->status == 2) {
+			if ($job->cancel == 0) {
+				if ($job->status == 0) {
+					$background = '#f78628';
+				} elseif ($job->status == 1) {
+					$background = '#07d358';
+				} elseif ($job->status == 2) {
+					$background = '##ffc107';
+				}
+			} else {
 				$background = '#e72f31';
 			}
 			$location = $job->city . ',(' . $job->Code . ')';

@@ -29,7 +29,7 @@ class jobModel extends CI_Model
 		if ($type !== null) {
 			$this->db->where($this->table_name . '.status', $type);
 		}
-		$this->db->where($this->table_name . '.cancel', 0);
+		// $this->db->where($this->table_name . '.cancel', 0);
 		$this->db->where($this->table_name . '.ss_id', $user_id);
 		$this->db->order_by('id', 'desc');
 		$query = $this->db->get();
