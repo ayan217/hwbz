@@ -55,6 +55,56 @@ class Profile extends CI_Controller
 	}
 
 
+	public function change_password()
+	{
+		if ($this->input->post()) {
+			$user_id = logged_in_ss_row()->user_id;
+			$this->form_validation->set_rules('old_psw', 'Old Password', 'required');
+			$this->form_validation->set_rules('new_psw', 'New Password', 'required');
+			$this->form_validation->set_rules('confirm_new_psw', 'Confirm New Password', 'required|matches[new_psw]');
+			if ($this->form_validation->run() == TRUE) {
+				$old_psw = $this->input->post('old_psw');
+				$new_psw = $this->input->post('new_psw');
+				$ss = $this->UserModel->getss($user_id);
+				if (password_verify($old_psw, $ss->password)) {
+					$password_encoded = password_hash($new_psw, PASSWORD_DEFAULT);
+					$data = [
+						'password' => $password_encoded
+					];
+					if ($this->UserModel->update_user($data, $user_id) == true) {
+						$this->session->set_flashdata('log_suc', 'Password Updated');
+						$res = [
+							'status' => 1,
+						];
+					} else {
+						$res = [
+							'status' => 0,
+							'msg' => 'Update Failed.'
+						];
+					}
+				} else {
+					$res = [
+						'status' => 0,
+						'msg' => 'Old Password Doesn\'t Match.'
+					];
+				}
+			} else {
+				$res = [
+					'status' => 0,
+					'msg' => validation_errors()
+				];
+			}
+			echo json_encode($res);
+		} else {
+			$data['folder'] = 'ss';
+			$data['title'] = 'HWBZ SS Change-password';
+			$data['template'] = 'change_password';
+			$data['user_data'] = logged_in_ss_row();
+			$this->load->view('layout', $data);
+		}
+	}
+
+
 	//stripe testing=================================================================================================================
 
 	public function stripe_all_cust()

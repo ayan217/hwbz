@@ -66,7 +66,7 @@
 				</div>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="index.html">
+				<a class="nav-link" href="<?=BASE_URL?>ss/change-password">
 					<i class="mdi mdi-grid-large menu-icon"></i>
 					<span class="menu-title">Change Password</span>
 				</a>
