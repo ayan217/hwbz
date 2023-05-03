@@ -60,8 +60,8 @@
 				</a>
 				<div class="collapse" id="ui-basic-3">
 					<ul class="nav flex-column sub-menu">
-						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>booking-history">Booking History</a></li>
-						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>payment-history">Payment History</a></li>
+						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>ss/booking-history">Booking History</a></li>
+						<li class="nav-item"> <a class="nav-link" href="<?= BASE_URL ?>ss/payment-history">Payment History</a></li>
 					</ul>
 				</div>
 			</li>

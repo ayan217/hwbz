@@ -80,3 +80,105 @@ font-family: 'Play', sans-serif;
     z-index: -1;
     top: 0;
   }
+  .text-banner {
+    width: 606px;
+    padding-top: 50px;
+  }
+  .bannertext {
+    width: 721px;
+    z-index: 9;
+    position: relative;
+    line-height: 80px;
+  }
+ 
+  .job-postdic {
+    margin-top: 80px;
+  }
+
+
+
+  .normal-header{
+    color:#0c2331;
+    font-size: 50px;
+  }
+  .howit-works {
+    padding-top: 60px;
+  }
+
+  .bacgroundimg2w{
+    background-image: url(../images/hwbzimg2.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    width: 100%;
+    height: 81%;
+    background-position: center;
+    top: -46px;
+  }
+
+  .bacgroundimg {
+    width: 550px;
+    height: 550px;
+    border-radius: 50%;
+
+    text-align: center;
+    border: 4px solid #fff;
+    box-shadow: 0px 0px 37px #b5e1fd;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .textimgs {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 0px;
+    background: #2d90ce;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    
+  }
+  .headtext3 {
+    font-size: 46px;
+    line-height: 60px;
+  }
+  .color-white{
+    color: #fff;
+  }
+.text-secblue{
+  color:#2d90ce;
+}
+  .sec-btn {
+    background: #fff;
+    padding: 20px 50px;
+    border-radius: 30px;
+    font-size: 18px;
+    transition: 0.3s;
+    font-weight: 600;
+    font-family: 'Play', sans-serif;
+  }
+
+  .btntexts {
+    margin-top: 25px;
+  }
+
+  .stepcounts {
+    width: 40px;
+    height: 40px;
+    
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 50%;
+    font-weight: 700;
+    padding-top: 7px;
+  }
+
+
+  .bg-blue{
+    background: #2d90ce;
+  }
+
+  .textheader {
+    display: flex;
+  }

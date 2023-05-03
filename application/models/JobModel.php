@@ -63,4 +63,26 @@ class jobModel extends CI_Model
 			return false;
 		}
 	}
+	public function get_bookings($filter)
+	{
+		$user_id = logged_in_ss_row()->user_id;
+		$state_table = TABLE_PREFIX . 'states';
+		$user_table = TABLE_PREFIX . 'user';
+		$this->db->select($this->table_name . '.*, ' . $state_table . '.Code, ' . $user_table . '.first_name, ' . $user_table . '.last_name');
+		$this->db->from($this->table_name);
+		$this->db->join($state_table, $state_table . '.id = ' . $this->table_name . '.state_id', 'left');
+		$this->db->join($user_table, $user_table . '.user_id = ' . $this->table_name . '.hcp_id', 'left');
+		$this->db->where($this->table_name . '.hcp_id IS NOT NULL');
+		$this->db->where($this->table_name . '.ss_id', $user_id);
+		if ($filter !== null) {
+			$this->db->where($filter);
+		}
+		$this->db->order_by('id', 'desc');
+		$query = $this->db->get();
+		if ($query->num_rows() == 0) {
+			return false;
+		} else {
+			return $query->result();
+		}
+	}
 }
