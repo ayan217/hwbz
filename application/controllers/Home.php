@@ -264,7 +264,7 @@ class Home extends CI_Controller
 	{
 		$config['upload_path'] = UPLOAD_PROFILE_PICTURE . '/';
 		$config['allowed_types'] = 'gif|jpg|jpeg|png';
-		$config['max_size'] = 10000;
+		$config['max_size'] = 30000;
 		$config['overwrite'] = true;
 		$file_extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 		$filename = logged_in_ss_row()->user_id . '_' . logged_in_ss_row()->first_name . logged_in_ss_row()->last_name  . '_HWBZ_profile_picture.' . $file_extension;
