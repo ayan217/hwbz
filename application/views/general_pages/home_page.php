@@ -46,14 +46,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="col-md-6">
                 <div class="texts-steps">
                     <div class="textheaders step1">
-                        <div class="textheader "><span class="stepcounts bg-blue">1</span><span>Create an Account</span></div>
+                        <div class="textheader "><span class="stepcounts bg-blue">1</span><span class="normal-header3 pt-2 px-3">Create an Account</span></div>
                         <p class="text-step-para">
                             There are many variations of passages of Lorem Ipsum available, but the majority have
                         </p>
                     </div>
 
                     <div class="textheaders step2">
-                        <div class="textheader"><span class="stepcounts bg-blue">2</span><span>Create an Account</span></div>
+                        <div class="textheader"><span class="stepcounts bg-blue">2</span><span class="normal-header3 pt-2 px-3">Post a Job</span></div>
                         <p class="text-step-para">
                             Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece
                             of classical
@@ -62,7 +62,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
                     <div class="textheaders step3">
-                        <div class="textheader"><span class="stepcounts bg-blue">3</span><span>Create an Account</span></div>
+                        <div class="textheader"><span class="stepcounts bg-blue">3</span><span class="normal-header3 pt-2 px-3">Approve Timesheet</span></div>
                         <p class="text-step-para">
                             Many desktop publishing packages and web page editors now use Lorem Ipsum
                         </p>
@@ -70,9 +70,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
                     <div class="textheaders step4">
-                        <div class="textheader"><span class="stepcounts bg-blue">4</span><span>Create an Account</span></div>
+                        <div class="textheader"><span class="stepcounts bg-blue">4</span><span class="normal-header3 pt-2 px-3">Make Payment</span></div>
                         <p class="text-step-para">
-                            Many desktop publishing packages and web page editors now use Lorem Ipsum
+                           
                             The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letter
                         </p>
                     </div>
