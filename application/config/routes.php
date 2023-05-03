@@ -49,6 +49,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+//file names caps
 
 //general pages
 $route['default_controller'] = 'Home';
