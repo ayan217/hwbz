@@ -53,3 +53,66 @@ function logged_in_ss_row()
 	$CI->load->model('UserModel');
 	return $CI->UserModel->getss($ss_id);
 }
+
+function get_refunded_acc($refund_id)
+{
+	require_once FCPATH . 'vendor/autoload.php';
+	$CI = &get_instance();
+	$CI->config->load('stripe');
+	// Set your Stripe API key
+	\Stripe\Stripe::setApiKey($CI->config->item('stripe_secret_key'));
+
+	try {
+
+		$refund = \Stripe\Refund::retrieve($refund_id);
+
+		$charge = \Stripe\Charge::retrieve($refund->charge);
+
+		// Retrieve the card object from the charge object
+		$card = $charge->payment_method_details->card;
+
+		$card_details = $card->brand . ' || XXXX XXXX ' . $card->last4;
+		return $card_details;
+	} catch (\Stripe\Exception\ApiErrorException $e) {
+		// Handle any errors
+		echo 'Error: ' . $e->getMessage();
+	}
+}
+
+function get_card($cust_id, $card_id)
+{
+	require_once FCPATH . 'vendor/autoload.php';
+	$CI = &get_instance();
+	$CI->config->load('stripe');
+	// Set your Stripe API key
+	\Stripe\Stripe::setApiKey($CI->config->item('stripe_secret_key'));
+
+	$card = \Stripe\Customer::retrieveSource($cust_id, $card_id);
+
+	// Retrieve the last 4 digits of the card
+	$card_details = $card->brand . ' || XXXX XXXX ' . $card->last4;
+	return $card_details;
+}
+
+function get_payment_card($pm_id)
+{
+	require_once FCPATH . 'vendor/autoload.php';
+	$CI = &get_instance();
+	$CI->config->load('stripe');
+	// Set your Stripe API key
+	\Stripe\Stripe::setApiKey($CI->config->item('stripe_secret_key'));
+
+	// Retrieve the PaymentMethod object associated with the Payment Method ID
+	$payment_method = \Stripe\PaymentMethod::retrieve($pm_id);
+
+	// Retrieve the Card object from the PaymentMethod object
+	$card = $payment_method->card;
+
+	// Retrieve the last 4 digits of the card
+	$last4 = $card->last4;
+
+
+	// Retrieve the last 4 digits of the card
+	$card_details = $card->brand . ' || XXXX XXXX ' . $card->last4;
+	return $card_details;
+}

@@ -17,6 +17,8 @@
 	<link rel="stylesheet" href="<?= ASSET_URL ?>templete/vendors/css/vendor.bundle.base.css">
 	<link rel="stylesheet" href="<?= ASSET_URL ?>templete/css/vertical-layout-light/style.css">
 	<link rel="stylesheet" href="<?= ASSET_URL ?>/css/style.css">
+	<link rel="stylesheet" href="<?= ASSET_URL ?>fontawesome/css/all.min.css">
+	<link rel="stylesheet" href="<?= ASSET_URL ?>/css/responsive.css">
 	<!-- endinject -->
 	<script src="<?= ASSET_URL . 'js/jquery-3.6.4.min.js' ?>"></script>
 </head>
@@ -26,18 +28,46 @@
 
 		<header>
 
-			<nav>
+			<nav class="big-screen">
 				<div class="d-flex justify-content-between">
 
-				<div class="logo"><img src="<?= ASSET_URL ?>/images/logo.png" alt=""></div>
-				<div class="navbtns-maindiv d-flex ">
-					<div class="navbtns"><a href="#" class="navlinks">About</a></div>
-					<div class="navbtns"><a href="#" class="navlinks">Faq's</a></div>
-					<div class="navbtns"><a href="#" class="navlinks">Contact</a></div>
-					<div class="navbtns"><a href="#" class="navlinks">Login</a></div>
-					<div class="navbtns signup"><a href="#" class="navlinks primary-btn">signup</a></div>
-				</div>
+					<div class="logo"> <a href="<?= BASE_URL ?>"><img src="<?= ASSET_URL ?>/images/logo.png" alt=""></a>
+					</div>
+					<div class="navbtns-maindiv d-flex ">
+						<div class="navbtns"><a href="<?= BASE_URL ?>about" class="navlinks">About</a></div>
+						<div class="navbtns"><a href="#" class="navlinks">Faq's</a></div>
+						<div class="navbtns"><a href="#" class="navlinks">Contact</a></div>
+						<div class="navbtns"><a href="login" class="navlinks">Login</a></div>
+						<div class="navbtns signup"><a href="signup" class="navlinks primary-btn">Sign Up</a></div>
+					</div>
 
 				</div>
 			</nav>
+
+
+			<!-- phone nav bar -->
+
+			<nav class="phone">
+				<div class="d-flex justify-content-between">
+
+					<div class="logo"> <a href="<?= BASE_URL ?>"><img src="<?= ASSET_URL ?>/images/logo.png" alt=""></a>
+					</div>
+					<div class="navbtns signup"><a href="signup" class="navlinks primary-btn btn">Sign Up</a></div>
+					<div class="nav-togglebtn">
+						<div class="cross1"></div>
+						<div class="cross2"></div>
+						<div class="cross1"></div>
+					</div>
+
+				</div>
+			</nav>
+
+
+			<div class="sliderphone toggle-cls">
+				<div class="navbtns phonrs"><a href="<?= BASE_URL ?>about" class="navlinks">About</a></div>
+				<div class="navbtns phonrs"><a href="#" class="navlinks">Faq's</a></div>
+				<div class="navbtns phonrs"><a href="#" class="navlinks">Contact</a></div>
+				<div class="navbtns phonrs"><a href="login" class="navlinks">Login</a></div>
+
+			</div>
 		</header>

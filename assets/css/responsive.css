@@ -1,0 +1,528 @@
+@media screen and (max-width: 1360px) {
+
+    .abs {
+        width: 44%;
+    }
+    .mainheader {
+        color: #07293f;
+        font-size: 56px;
+      }
+    .text-banner {
+        width: 40%;
+        padding-top: 50px;
+    }
+
+    .bannertext {
+        width: 630px;
+        z-index: 9;
+        position: relative;
+        line-height: 80px;
+    }
+
+    .bannertext {
+        color: #0c2331;
+        font-size: 56px;
+    }
+
+    .step1,
+    .step4 {
+        position: relative;
+        right: 20px;
+        margin-bottom: 35px;
+    }
+
+    .step2,
+    .step3 {
+        position: relative;
+        right: -6px;
+        margin-bottom: 20px;
+    }
+
+    .left-absulte {
+        width: 12%;
+    }
+
+    .step8,
+    .step7 {
+        position: relative;
+        left: 20px;
+        margin-bottom: 35px;
+    }
+
+    .step5,
+    .step6 {
+        position: relative;
+        left: -6px;
+        margin-bottom: 20px;
+    }
+
+    .abst-orng {
+        width: 11%;
+        z-index: -1;
+    }
+
+    .abs-aaboutimg {
+        width: 20%;
+    }
+
+    .jobtitles {
+
+        padding: 16px 20px;
+
+    }
+
+    .big-padd-rit {
+        padding-right: 106px;
+    }
+
+    .big-screen {
+        display: block;
+    }
+
+    .phone {
+        display: none;
+    }
+    .orange {
+        background: #f68627 !important;
+      }
+}
+
+
+@media screen and (max-width: 960px) {
+    .mainheader {
+        color: #07293f;
+        font-size: 40px;
+      }
+      .top-text {
+        margin: 15px auto;
+      }
+      .about1st-section {
+        padding: 50px 0px;
+        margin-top: 25px;
+      }
+      .sideimg {
+        width: 100%;
+      }
+      .btn-abutsus-page {
+        margin-top: 25px;
+      }
+    nav {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+    }
+    
+    .logo img {
+        width: 150px;
+    }
+
+    .navbtns-maindiv {
+        padding-top: 10px;
+        font-family: 'Play', sans-serif;
+    }
+
+    .primary-btn {
+        background: #2d90ce;
+        color: #fff !important;
+        padding: 15px 30px;
+        border-radius: 30px;
+        font-size: 16px;
+        transition: 0.3s;
+        font-weight: 600;
+        font-family: 'Play', sans-serif;
+    }
+
+    .homebanner {
+        padding-left: 20px;
+        padding-top: 81px;
+        padding-right: 20px;
+    }
+
+    .mainimgs {
+        width: 100%;
+        margin-top: 0px;
+    }
+
+    .bannertext {
+        width: 409px;
+        z-index: 9;
+        position: relative;
+        line-height: 51px;
+    }
+
+    .bannertext {
+        color: #0c2331;
+        font-size: 40px;
+    }
+
+    .job-postdic {
+        margin-top: 25px;
+    }
+
+    .howit-works {
+        padding-top: 40px;
+    }
+
+    .bacgroundimg {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        text-align: center;
+        border: 4px solid #fff;
+        box-shadow: 0px 0px 37px #b5e1fd;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .headtext3 {
+        font-size: 28px;
+        line-height: 35px;
+    }
+
+    .sec-btn {
+        background: #fff;
+        padding: 20px 50px;
+        border-radius: 28px;
+        font-size: 16px;
+        transition: 0.3s;
+        font-weight: 600;
+        font-family: 'Play', sans-serif;
+        transition: 0.3s;
+    }
+
+    .text-secblue {
+        color: #2d90ce;
+        padding: 13px 12px;
+    }
+
+    .text-step-para {
+        font-size: 15px;
+        color: #0c2331;
+        font-family: 'Roboto', sans-serif;
+        text-shadow: 0px 0px 1px #0c2331;
+        width: 80%;
+        line-height: 25px;
+    }
+
+    .textimgs {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        bottom: 0px;
+        background: #2d90ce;
+        padding-top: 10px;
+        padding-bottom: 16px;
+    }
+
+    .text-secblue {
+        color: #2d90ce;
+        padding: 13px 12px;
+    }
+
+    .stepcounts {
+        width: 35px;
+        height: 35px;
+        color: #fff;
+        font-size: 18px;
+        text-align: center;
+        border-radius: 50%;
+        font-weight: 700;
+        padding-top: 8px;
+        font-family: 'Play', sans-serif;
+    }
+
+    .normal-header3 {
+        font-size: 19px;
+        font-family: "Play-Bold";
+        color: #0c2331;
+    }
+
+    .step1,
+    .step4 {
+        position: relative;
+        right: 0px;
+        margin-bottom: 10px;
+    }
+
+    .step2,
+    .step3 {
+        position: relative;
+        right: 0;
+        margin-bottom: 10px;
+    }
+
+    .step2,
+    .step3 {
+        position: relative;
+        right: 0;
+        margin-bottom: 10px;
+    }
+
+    .step5,
+    .step6 {
+        position: relative;
+        left: 0;
+        margin-bottom: 10px;
+    }
+
+    .big-padd-rit {
+        padding-right: 0px;
+    }
+
+    .normal-header {
+        color: #0c2331;
+        font-size: 30px;
+    }
+
+    .slect-lftauto {
+        width: fit-content;
+        margin-right: auto;
+        width: 82%;
+    }
+
+    .slectauto {
+        width: 82%;
+    }
+
+    .counternumber {
+        font-size: 28px;
+        font-family: "Play-Bold";
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .topicon {
+        margin-bottom: -32px;
+        position: relative;
+        z-index: 5;
+    }
+
+    .topicon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        text-align: center;
+        padding-top: 18px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .counter-maindiv {
+        padding-bottom: 32px;
+        padding-top: 26px;
+    }
+
+    .counter-icon {
+        width: 53%;
+    }
+
+    .counter {
+        margin-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    .aboutus {
+        padding-top: 50px;
+    }
+
+    .step8,
+    .step7 {
+        position: relative;
+        left: 0;
+        margin-bottom: 10px;
+    }
+
+    .logo-footer img {
+        width: 150px;
+    }
+
+    .text-copyrit {
+        font-size: 14px;
+        color: #fff;
+        margin-top: 27px;
+    }
+
+    .subtext {
+        font-size: 20px;
+        margin-bottom: 7px;
+        color: #0c2331;
+    }
+
+    .footear-menu a {
+        display: block;
+        color: #fff;
+        text-decoration: none;
+        font-size: 15px;
+        margin-top: 14px;
+    }
+
+    .social-icon a {
+        color: #fff;
+        display: block;
+        text-decoration: none;
+        margin-top: 19px;
+        font-size: 14px;
+    }
+
+    .orange-text {
+        color: #f68627;
+        padding: 13px 12px;
+    }
+
+    .bg-footer {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    .boder-box-orange {
+        box-shadow: 0px 0px 37px #ffd5b1;
+      }
+}
+    @media screen and (max-width:760px) {
+    .big-screen {
+        display: none;
+    }
+
+    .phone {
+        display: block;
+    }
+
+    nav {
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 20px;
+    }
+
+    .primary-btn {
+        background: #2d90ce;
+        color: #fff !important;
+        padding: 10px 19px;
+        border-radius: 30px;
+        font-size: 16px;
+        transition: 0.3s;
+        font-weight: 600;
+        font-family: 'Play', sans-serif;
+    }
+
+    .sliderphone {
+        position: fixed;
+        z-index: 10;
+        background: #2d90cedb;
+        width: 69%;
+        height: 100vh;
+        padding-top: 30px;
+        margin-top: 10px;
+    }
+
+    .navbtns {
+        margin-left: 25px;
+    }
+
+    .navlinks {
+        font-size: 18px;
+        color: #fff;
+    }
+
+
+    .navbtns.phonrs {
+
+        padding-bottom: 15px;
+
+    }
+    .bannerimgs.d-flex.justify-content-between {
+        flex-wrap: wrap-reverse;
+      }
+      .text-banner {
+        width: 100%;
+        padding-top: 10px;
+      }
+      .bannertext {
+        width: 100%;
+        z-index: 9;
+        position: relative;
+        line-height: 46px;
+      }
+      .bannertext {
+        color: #0c2331;
+        font-size: 35px;
+      }
+      .text-step-para {
+        width: 100%;
+        margin-top: 5px;
+      }
+      .row.pt-5.mt-5.orng-divsa {
+        flex-wrap: wrap-reverse;
+      }
+      .text-rit {
+        margin-top: 20px;
+      }
+      .aboutus {
+        padding-top: 30px;
+      }
+      .text.big-padd-rit.mt-5 {
+        margin-top: 10px !important;
+      }
+      .normal-header {
+        margin-top: 23px;
+      }
+      .slectauto {
+        width: 100%;
+      }
+      .slect-lftauto {
+        width: fit-content;
+        margin-right: auto;
+        width: 100%;
+      }
+      .map.pt-5.mt-5 {
+        margin-top: 10px !important;
+        padding-top: 20px !important;
+      }
+      .counter {
+        margin-top: 31px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+      }
+      .pt-5 {
+        padding-top: 1rem !important;
+      }
+      .mt-5 {
+        margin-top: 1rem !important;
+      }
+      .find-the-job {
+        padding-top: 30px;
+        padding-bottom: 30px;
+      }
+      .bg-footer {
+        padding-top: 30px;
+        padding-bottom: 30px;
+      }
+      .subtext {
+        margin-top: 20px;
+      }
+      .widthphone.col-lg-3.col-sm-3 {
+        width: 50%;
+        margin-top: 20px;
+      }
+      .sliderphone.toggle-cls {
+        display: block;
+      }
+      .mainheader {
+        color: #07293f;
+        font-size: 33px;
+      }
+      .top-text {
+        width: 100%;
+        
+      }
+      .sideimg {
+        margin-top: 30px;
+        }
+        .abst-orng {
+            display: none;
+          }
+          .abs {
+            display: none;
+          }
+          .boder-box-orange {
+            box-shadow: 0px 0px 37px #ffd5b1;
+          }
+}
