@@ -1,4 +1,4 @@
-@media screen and (max-width: 1360px) {
+@media screen and (max-width: 1500px) {
 
     .abs {
         width: 44%;
@@ -85,6 +85,8 @@
     .orange {
         background: #f68627 !important;
       }
+       
+          
 }
 
 
@@ -92,6 +94,15 @@
     .mainheader {
         color: #07293f;
         font-size: 40px;
+      }
+      #hcp-forms {
+        width: 650px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .signup-txt-icon {
+        padding-top: 10px;
+        padding-bottom: 15px;
       }
       .top-text {
         margin: 15px auto;
@@ -573,5 +584,47 @@
           .navlinks.signup {
             font-size: 13px;
             color: #fff;
+          }
+          .signup-txt-icon {
+            padding-top: 10px;
+            padding-bottom: 15px;
+          }
+          .signup-txt-icon {
+            margin-top: 32px;
+          }
+          .p30 {
+            padding-top: 0px;
+          }
+          #hcp-forms {
+            width:95%;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .inputs-form {
+            width: 100%;
+            height: 40px;
+          }
+          .icons-upald {
+            margin-left: 10px;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            width: 30px;
+            height: 30px;
+            background: #5555;
+            text-align: center;
+            padding-top: 6px;
+            color: #fff;
+            margin-top: -6px;
+          }
+          .fliename {
+            padding-top: 0px;
+          }
+          .btnd-sc {
+            width: 150px;
+            height: 150px;
+          }
+          .btnd-sc img {
+            width: 75px;
           }
 }

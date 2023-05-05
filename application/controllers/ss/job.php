@@ -180,7 +180,7 @@ class Job extends CI_Controller
 
 					//save job to the database
 					$job_status = 0;
-					$job_id = 'HWBZ_JOB_' . logged_in_ss_row()->user_id . mt_rand(1000, 9999);
+					$job_id = $this->multipleNeedsModel->get_max_id('jobs');
 
 					$job_data = [
 						'job_id' => $job_id,

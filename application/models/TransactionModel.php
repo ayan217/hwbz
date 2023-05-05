@@ -24,7 +24,7 @@ class TransactionModel extends CI_Model
 		$user_id = logged_in_ss_row()->user_id;
 		$job_table = TABLE_PREFIX . 'jobs';
 		$user_table = TABLE_PREFIX . 'user';
-		$this->db->select($this->table_name . '.*, ' . $job_table . '.service_ids, ' . $user_table . '.stripe_cust_id');
+		$this->db->select($this->table_name . '.*, ' . $job_table . '.service_ids, ' . $user_table . '.stripe_cust_id, '.$job_table . '.stripe_payment_id');
 		$this->db->from($this->table_name);
 		$this->db->join($job_table, $job_table . '.job_id = ' . $this->table_name . '.job_id', 'left');
 		$this->db->join($user_table, $user_table . '.user_id = ' . $this->table_name . '.user_id', 'left');

@@ -27,7 +27,7 @@ if ($this->session->flashdata('log_err')) {
 			<input type="password" class="inputs-pags paw" name="password" placeholder="Password" required>
 
 			<div class="forgetpass">
-				<div class="check-box"><input id="cb3" type="checkbox"  /> <label for="" class="text-keep">Keep me logged in</label> </div>
+				<div class="check-box"><input class="cb3" type="checkbox"  /> <label for="" class="text-keep">Keep me logged in</label> </div>
 				<div class="forget-text"><a href="#" class="forgetanchor">Forgot password?</a> </div>
 				
 			</div>

@@ -575,7 +575,21 @@ transition: 0.5s;
 .sliderphone.toggle-cls {
   display: none;
 }
-
+.link-footer {
+  width: fit-content;
+}
+.link-footer:hover {
+  color: #2d90ce;
+}
+.link-footer:focus {
+  color: #2d90ce;
+}
+.web-text:hover {
+  color: #2d90ce;
+}
+.navlinks:hover {
+  color: #2d90ce;
+}
 /* home end */
 
 
@@ -634,14 +648,14 @@ transition: 0.5s;
   transition: 0.3s;
 }
 
-#cb3 {
+.cb3 {
   filter: hue-rotate(286deg);
   font-size: 20px;
   transform: scale(1.4);
 }
 
 .forgetpass {
-  width: 600px !important;
+  width: 594px !important;
   margin-left: auto !important;
   margin-right: auto !important;
   display: flex;
@@ -673,4 +687,187 @@ transition: 0.5s;
   padding: 100px 0px;
 }
 
+.arws {
+  margin-left: 18px;
+}
 /* login end */
+
+
+
+/* signup  */
+
+
+.bg-sign {
+  position: relative;
+  z-index: -1;
+  width: 100%;
+  margin-bottom: -155px;
+}
+.signup-txt-icon {
+  padding-bottom: 61px;
+}
+.form1btn {
+  position: relative;
+}
+
+
+.text-signup {
+  font-size: 18px;
+  margin-top: 19px;
+color: #082a40;
+font-weight: bold;
+}
+
+.signup-txt-icon {
+  padding-bottom: 42px;
+  cursor: pointer;
+  transition: 0.3s;
+  border: 1px solid #dbdbdb;
+  border-radius:15px ;
+}
+.signup-txt-icon-active{
+  background: #f68627;
+  transition: 0.3s;
+}
+.signup-txt-icon:hover {
+  background: #f68627;
+  transition: 0.3s;
+}
+.signup-txt-icon:focus {
+  background: #f68627;
+  transition: 0.3s;
+}
+.signup-txt-icon {
+  padding-bottom: 40px;
+  cursor: pointer;
+  transition: 0.3s;
+  border: 1px solid #dbdbdb;
+  border-radius: 15px;
+  padding-top: 28px;
+}
+.p30 {
+  padding-top: 30px;
+}
+.p20{padding-top: 20px;}
+
+.color-wite{color:#fff}
+
+.signup-txt-icon:hover .text-signup{
+  color:#fff
+}
+.signup-txt-icon {
+  overflow: hidden;
+}
+.sociali:hover .icorn{
+  background: #a6a3a3;
+}
+
+.sociali:hover .fblogo{
+  opacity: 0.8;
+}
+
+
+
+/* nursing tab */
+
+.bg-blues {
+  color: #2d90ce;
+}
+#hcp-forms {
+  width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.inputs-form {
+  width: 100%;
+  height: 50px;
+  border-radius: 12px;
+  border: 1px solid #c1c1c1;
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 16px;
+  background: #fff;
+    outline: 1px solid #2d90ce00;
+    color: #878787;
+}
+
+#h_gender ,#h_state {
+  color: #c4c4c4;
+}
+.inputs-form:focus {
+  border: 1px solid #c1c1c1;
+  outline: 1px solid #2d90ce;
+  transition: 0.3s;
+}
+.nurse{
+  text-align: right !important;
+}
+
+.logincls {
+  color: #2d90ce;
+}
+
+
+.fliename {
+  padding-top: 5px;
+}
+
+.icons-upald {
+  margin-left: 10px;
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+  background: #5555;
+  text-align: center;
+  padding-top: 6px;
+  color: #fff;
+}
+
+.row.mainsbtndona {
+  justify-content: space-between;
+}
+
+.btn.primary-btn.bacvk {
+  background: #ededed;
+  color: #515151 !important;
+}
+
+.back-arw {
+  margin-right: 20px;
+}
+
+.fit-wi{
+  width: fit-content;
+}
+.btnd-sc {
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  background: #f8f8f8;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 26px;
+}
+
+.btnd-sc img {
+  width: 114px;
+}
+.up-doc-header {
+  font-size: 30px;
+}
+.text-uplds {
+  font-size: 17px;
+  color: #8d8d8d;
+  margin-bottom: 18px;
+}
+
+.text-drivers {
+  font-size: 17px;
+  color: #333;
+  margin-bottom: 10px;
+  margin-top: 15px;
+}

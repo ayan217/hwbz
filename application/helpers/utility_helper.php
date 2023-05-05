@@ -90,7 +90,7 @@ function get_card($cust_id, $card_id)
 	$card = \Stripe\Customer::retrieveSource($cust_id, $card_id);
 
 	// Retrieve the last 4 digits of the card
-	$card_details = $card->brand . ' || XXXX XXXX ' . $card->last4;
+	$card_details = $card->brand . ' || XXXX ' . $card->last4;
 	return $card_details;
 }
 
@@ -116,3 +116,4 @@ function get_payment_card($pm_id)
 	$card_details = $card->brand . ' || XXXX XXXX ' . $card->last4;
 	return $card_details;
 }
+

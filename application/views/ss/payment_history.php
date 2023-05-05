@@ -25,11 +25,13 @@
 							<?php
 							if (isset($_POST['start_date']) && isset($_POST['end_date'])) {
 							?>
-								<a href="<?= base_url('ss/booking-history') ?>">Clear Filter</a>
+								<a href="<?= base_url('ss/payment-history') ?>">Clear Filter</a>
 							<?php
 							}
 							?>
 
+						</div>
+						<div><a href="<?php echo base_url('ss/Reports/export_csv/'); ?><?= isset($_POST['start_date']) ? $_POST['start_date'] : 0 ?>/<?= isset($_POST['end_date']) ? $_POST['end_date'] : 0 ?>" class="btn btn-primary">Export CSV</a>
 						</div>
 					</div>
 					<hr>
@@ -76,10 +78,9 @@
 											} elseif ($acpaymenttype[0] == 'pm') {
 												$ac_no = get_payment_card($payment->payment_account);
 												// $ac_no = '1';
-											}else{
+											} else {
 												$ac_no = '3';
 											}
-											
 										}
 
 								?>
@@ -87,7 +88,7 @@
 											<td><?= $payment->job_id ?></td>
 											<td><?= $date_str ?></td>
 											<td><?= $time_str ?></td>
-											<td><?= $payment->transaction_id ?></td>
+											<td><?= $payment->stripe_payment_id ?></td>
 											<td><?= $service_names ?></td>
 											<td><?= $amount ?></td>
 											<td><?= $ac_no ?></td>

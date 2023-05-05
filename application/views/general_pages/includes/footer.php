@@ -27,8 +27,8 @@
                 <div class="widthphone col-lg-3 col-sm-3">
                     <h3 class="subtext text-clr-white">Follow Us</h3>
                     <div class="social-icon">
-                        <a href="#" class="d-flex"><span class="icorn"><i class="fa-brands fa-facebook-f"></i></span> <span class="fblogo"> Facebook </span></a>
-                        <a href="#" class="d-flex"><span class="icorn"><i class="fa-brands fa-twitter"></i></span> <span class="fblogo">Twitter </span></a>
+                        <a href="#" class="d-flex sociali"><span class="icorn"><i class="fa-brands fa-facebook-f"></i></span> <span class="fblogo"> Facebook </span></a>
+                        <a href="#" class="d-flex sociali"><span class="icorn"><i class="fa-brands fa-twitter"></i></span> <span class="fblogo">Twitter </span></a>
                     </div>
                 </div>
             </div>
