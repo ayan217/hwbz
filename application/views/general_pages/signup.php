@@ -1,13 +1,39 @@
 <form action="<?= BASE_URL . 'signup' ?>" id="signup_form" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="hcp_form_1" value="0">
 	<div id="signup-user-type">
-		<h1>I want to signup as a</h1>
+		<h1 class="normal-header">I want to signup as a</h1>
 		<label for="<?= PATIENT ?>"><input checked id="<?= PATIENT ?>" type="radio" name="user_type" value="<?= PATIENT ?>">Individual Patient</label>
 		<label for="<?= ORG ?>"><input id="<?= ORG ?>" type="radio" name="user_type" value="<?= ORG ?>">Organization</label>
 		<label for="<?= HCP ?>"><input id="<?= HCP ?>" type="radio" name="user_type" value="<?= HCP ?>">Nurse / HCP</label>
 		<div><button type="button" onclick="select_user_type();">Continue</button></div>
 	</div>
 	<div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--  -->
+
+
+
+
+
+
 		<div class="hcp-forms" id="hcp-forms" style="display:none">
 			<div> Signup as a hcp / nurse <br> Already have an account ? <a href="<?= BASE_URL ?>login">Login</a></div>
 			<div id="hcp-form-1">

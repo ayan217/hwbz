@@ -52,7 +52,7 @@
 
 					<div class="logo"> <a href="<?= BASE_URL ?>"><img src="<?= ASSET_URL ?>/images/logo.png" alt=""></a>
 					</div>
-					<div class="navbtns signup"><a href="signup" class="navlinks primary-btn btn">Sign Up</a></div>
+					<div class="navbtns signup"><a href="signup" class="navlinks signup primary-btn btn">Sign Up</a></div>
 					<div class="nav-togglebtn">
 						<div class="cross1"></div>
 						<div class="cross2"></div>

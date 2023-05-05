@@ -619,11 +619,58 @@ transition: 0.5s;
   border: 1px solid #c1c1c1;
   border-radius: 10px;
   padding: 0px 10px;
-  height: 60px;
+  height: 55px;
   width: 600px;
   display: block;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
+  transition: 0.3s;
+  outline: 2px solid #2d90ce00;
 }
+.inputs-pags:focus {
+  border: 1px solid #c1c1c1;
+  outline: 2px solid #2d90ce;
+  transition: 0.3s;
+}
+
+#cb3 {
+  filter: hue-rotate(286deg);
+  font-size: 20px;
+  transform: scale(1.4);
+}
+
+.forgetpass {
+  width: 600px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: flex;
+  justify-content: space-between!important;
+  margin-bottom: 20px;
+}
+.text-keep {
+  font-size: 16px;
+  margin-left: 10px;
+  color: #555;
+}
+.inputs-pags:last-child{
+  margin-bottom: 10px;
+}
+.inputs-pags.paw {
+  margin-bottom: 20px;
+}
+.forgetanchor {
+  font-size: 17px;
+  text-decoration: none;
+  color: #2d90ce;
+}
+.top-text.login-top {
+  margin: 15px auto;
+  margin-bottom: 50px;
+}
+
+.about1st-section.loginpage {
+  padding: 100px 0px;
+}
+
 /* login end */

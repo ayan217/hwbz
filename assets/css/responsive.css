@@ -376,6 +376,13 @@
     .boder-box-orange {
         box-shadow: 0px 0px 37px #ffd5b1;
       }
+      .inputs-pags {
+        height: 44px;
+        width: 400px;
+      }
+      .forgetpass {
+        width: 400px !important;
+      }
 }
     @media screen and (max-width:760px) {
     .big-screen {
@@ -524,5 +531,47 @@
           }
           .boder-box-orange {
             box-shadow: 0px 0px 37px #ffd5b1;
+          }
+          .inputs-pags {
+            width: 100%;
+          }
+          .forgetpass {
+            width: 100% !important;
+            padding-left: 4px;
+          }
+          .text-keep {
+            font-size: 15px;
+          }
+          .forgetanchor {
+            font-size: 15px;
+          }
+          .inputs-pags.paw {
+            margin-bottom: 10px;
+          }
+          .top-text.login-top {
+            margin: 15px auto;
+            margin-bottom: 30px;
+          }
+          .nav-togglebtn {
+            margin-left: 10px;
+          }
+          .sliderphone {
+            margin-top: 10px;
+          }
+          nav {
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 10px;
+          }
+          .about1st-section {
+            padding: 50px 0px;
+            margin-top: 10px;
+          }
+          .logo img {
+            width: 130px;
+          }
+          .navlinks.signup {
+            font-size: 13px;
+            color: #fff;
           }
 }
