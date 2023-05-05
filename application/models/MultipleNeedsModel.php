@@ -97,4 +97,22 @@ class multipleNeedsModel extends CI_Model
 			return $query->row();
 		}
 	}
+	public function get_max_id($table_name)
+	{
+		$table_name = TABLE_PREFIX . $table_name;
+		$table = TABLE_PREFIX . 'last_added_id';
+		$this->db->select();
+		$this->db->from($table);
+		$this->db->where('table_name', $table_name);
+		$query = $this->db->get();
+		if ($query->num_rows() == 0) {
+			return false;
+		} else {
+			$id = $query->row()->id;
+			$max_id = preg_replace("/[^0-9]/", "", $id) + 1;
+			$max_id_padded = sprintf("%08d", $max_id);
+			$this->db->query('update ' . $table . ' set id = "HW' . $max_id_padded . '" where table_name = "' . $table_name . '"');
+			return 'HW' . $max_id_padded;
+		}
+	}
 }

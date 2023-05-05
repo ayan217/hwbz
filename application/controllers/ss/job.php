@@ -13,6 +13,7 @@ class Job extends CI_Controller
 		$this->config->load('stripe');
 		$this->load->model('SettingsModel');
 		$this->load->model('jobModel');
+		$this->load->model('TransactionModel');
 	}
 	function get_hour_diff($start, $end)
 	{
@@ -179,7 +180,7 @@ class Job extends CI_Controller
 
 					//save job to the database
 					$job_status = 0;
-					$job_id = 'HWBZ_JOB_' . logged_in_ss_row()->user_id . mt_rand(1000, 9999);
+					$job_id = $this->multipleNeedsModel->get_max_id('jobs');
 
 					$job_data = [
 						'job_id' => $job_id,
@@ -201,10 +202,29 @@ class Job extends CI_Controller
 					$added_job_id = $this->jobModel->add($job_data);
 
 					if ($added_job_id !== false) {
-						$res = [
-							'status' => 1,
-							'msg' => $status
+						$transaction_id = '#HWTXN' . mt_rand(1000, 9999);
+						$transaction_data = [
+							'transaction_id' => $transaction_id,
+							'user_id' => logged_in_ss_row()->user_id,
+							'job_id' => $job_id,
+							'payment_account' => $payment_id,
+							'amount' => $amountindoller,
+							'status ' => 0,
+							'type' => 'job_post',
+							'created_at' => date('Y-m-d H:i:s'),
 						];
+						$added_transaction_id = $this->TransactionModel->add($transaction_data);
+						if ($added_transaction_id !== false) {
+							$res = [
+								'status' => 1,
+								'msg' => $status
+							];
+						} else {
+							$res = [
+								'status' => 0,
+								'msg' => 'transaction_database error..!'
+							];
+						}
 					} else {
 						$res = [
 							'status' => 0,
@@ -312,8 +332,11 @@ class Job extends CI_Controller
 				'payment_intent' => $payment_id,
 			]);
 		}
-
-		return $refund->status;
+		$refund_data = [
+			'status' => $refund->status,
+			'id' => $refund->id,
+		];
+		return $refund_data;
 	}
 
 	public function cancel_job($job_id)
@@ -342,13 +365,26 @@ class Job extends CI_Controller
 				$canceletion_fee_hour = 24;
 			}
 			if ($diff_hours >= $canceletion_fee_hour) {
-				if ($this->refund($payment_id) == 'succeeded') {
+				$refund_res = $this->refund($payment_id);
+				if ($refund_res['status'] == 'succeeded') {
 					$cancel_data = [
 						'cancel' => 1,
 						'cancelation_time' => date('Y-m-d H:i:s'),
 						'refunded_amount' => $amount,
 					];
 					if ($this->jobModel->update_job($cancel_data, $job_id) == true) {
+						$transaction_id = '#HWTXN' . mt_rand(1000, 9999);
+						$transaction_data = [
+							'transaction_id' => $transaction_id,
+							'user_id' => logged_in_ss_row()->user_id,
+							'job_id' => $job_row->job_id,
+							'payment_account' => $refund_res['id'],
+							'amount' => $amount,
+							'status ' => 0,
+							'type' => 'job_refund',
+							'created_at' => date('Y-m-d H:i:s'),
+						];
+						$added_transaction_id = $this->TransactionModel->add($transaction_data);
 						$this->session->set_flashdata('log_suc', 'Job Canceled');
 						redirect($_SERVER['HTTP_REFERER'], 'refresh');
 					} else {
@@ -365,13 +401,27 @@ class Job extends CI_Controller
 				$cancelation_fee = $one_hour_amount * 2;
 				$refunded_amount = $amount - $cancelation_fee;
 				$refunded_amount_in_cents = ($amount - $cancelation_fee) * 100;
-				if ($this->refund($payment_id, $refunded_amount_in_cents) == 'succeeded') {
+				$refund_res = $this->refund($payment_id, $refunded_amount_in_cents);
+
+				if ($refund_res['status'] == 'succeeded') {
 					$cancel_data = [
 						'cancel' => 1,
 						'cancelation_time' => date('Y-m-d H:i:s'),
 						'refunded_amount' => $refunded_amount,
 					];
 					if ($this->jobModel->update_job($cancel_data, $job_id) == true) {
+						$transaction_id = '#HWTXN' . mt_rand(1000, 9999);
+						$transaction_data = [
+							'transaction_id' => $transaction_id,
+							'user_id' => logged_in_ss_row()->user_id,
+							'job_id' => $job_row->job_id,
+							'payment_account' => $refund_res['id'],
+							'amount' => $refunded_amount,
+							'status ' => 0,
+							'type' => 'job_refund',
+							'created_at' => date('Y-m-d H:i:s'),
+						];
+						$added_transaction_id = $this->TransactionModel->add($transaction_data);
 						$this->session->set_flashdata('log_suc', 'Job Canceled');
 						redirect($_SERVER['HTTP_REFERER'], 'refresh');
 					} else {

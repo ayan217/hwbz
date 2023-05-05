@@ -57,6 +57,7 @@ $route['signup'] = 'Home/signup';
 $route['thank-you'] = 'Home/thankyou';
 $route['login'] = 'Home/login';
 $route['logout'] = 'Home/logout';
+$route['about'] = 'Home/about';
 //general pages
 //ss pages
 $route['ss'] = 'ss/Dashboard';
@@ -65,6 +66,7 @@ $route['ss/job/(:any)'] = 'ss/Job/view_job/$1';
 $route['ss/cancel-job/(:num)'] = 'ss/Job/cancel_job/$1';
 $route['ss/change-password'] = 'ss/Profile/change_password';
 $route['ss/booking-history'] = 'ss/Reports/booking_history';
+$route['ss/payment-history'] = 'ss/Reports/payment_history';
 //ss pages
 // admin pages
 $route['admin'] = 'admin/Login';
