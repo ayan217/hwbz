@@ -235,41 +235,78 @@
 
 
 
-		<div id="patient-form" style="display:none">
-			<div> Signup as an Patient <br> Already have an account ? <a href="<?= BASE_URL ?>login">Login</a></div>
-			<div>
-				<input id="p_username" type="text" name="p_username" placeholder="User Name">
-				<input id="p_email" type="email" name="p_email" placeholder="Email">
-				<input id="p_password" type="password" name="p_password" placeholder="Password">
-				<input id="p_cpassword" type="password" name="p_cpassword" placeholder="Confirm Password">
-				<input id="p_fname" type="text" name="p_fname" placeholder="First Name">
-				<input id="p_lname" type="text" name="p_lname" placeholder="Last Name">
-				<select name="p_gender" id="p_gender">
-					<option value="0" selected>Gender</option>
-					<option value="M">Male</option>
-					<option value="F">Female</option>
-					<option value="O">Other</option>
-				</select>
-				<input id="p_ssn" type="text" name="p_ssn" placeholder="SSN">
-				<input id="p_address" type="text" name="p_address" placeholder="Street Address">
-				<input id="p_city" type="text" name="p_city" placeholder="City">
-				<select name="p_state" id="">
-					<option value="0" selected>State</option>
-					<?php
-					if (!empty($all_usa_states)) {
-						foreach ($all_usa_states as $state) {
-					?>
-							<option value="<?= $state->id ?>"><?= $state->Name ?> (<?= $state->Code ?>)</option>
-					<?php
+		<div class="width-same-form" id="patient-form" style="display:none">
+			<div class="round-img">
+				<img src="http://ayan/hwbz/assets//images/pati1.png" alt="">
+			</div>
+			<h2 class="normal-header text-center"> Sign Up as a <span class="bg-blues">Patient</span></h2>
+			<p class="accout top-text login-top text-center"> Already have an account ? <a class="logincls" href="<?= BASE_URL ?>login">Login</a></p>
+			<!-- <div class="normal-header text-center">Signup as an Patient<br> Already have an account ? <a href="<?= BASE_URL ?>login">Login</a></div> -->
+			<div class="row">
+				<div class="col-lg-6 col-sm-6">
+					<input class="inputs-form" id="p_username" type="text" name="p_username" placeholder="User Name">
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<input class="inputs-form" id="p_email" type="email" name="p_email" placeholder="Email">
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<input class="inputs-form" id="p_password" type="password" name="p_password" placeholder="Password">
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<input class="inputs-form" id="p_cpassword" type="password" name="p_cpassword" placeholder="Confirm Password">
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<input class="inputs-form" id="p_fname" type="text" name="p_fname" placeholder="First Name">
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<input class="inputs-form" id="p_lname" type="text" name="p_lname" placeholder="Last Name">
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<input class="inputs-form" id="p_ssn" type="text" name="p_ssn" placeholder="SSN">
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<select class="inputs-form" name="p_gender" id="p_gender">
+						<option value="0" selected>Gender</option>
+						<option value="M">Male</option>
+						<option value="F">Female</option>
+						<option value="O">Other</option>
+					</select>
+				</div>
+				<div class="col-lg-12">
+					<input class="inputs-form" id="p_address" type="text" name="p_address" placeholder="Street Address">
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<input  class="inputs-form" id="p_city" type="text" name="p_city" placeholder="City">
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<select  class="inputs-form" name="p_state" id="">
+						<option value="0" selected>State</option>
+						<?php
+						if (!empty($all_usa_states)) {
+							foreach ($all_usa_states as $state) {
+						?>
+								<option value="<?= $state->id ?>"><?= $state->Name ?> (<?= $state->Code ?>)</option>
+						<?php
+							}
 						}
-					}
-					?>
-				</select>
-				<input id="p_zip" type="text" name="p_zip" placeholder="ZIP">
-				<input id="p_phone" type="text" name="p_phone" placeholder="Phone Number">
-				<input id="p_dob" type="date" name="p_dob" placeholder="DOB">
-				<input id="p_emergency_info" type="text" name="p_emergency_info" placeholder="Emergency Contact Info">
-				<div><button type="button" class="sign-up">Sign Up Now</button></div>
+						?>
+					</select>
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<input  class="inputs-form" id="p_zip" type="text" name="p_zip" placeholder="ZIP">
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<input  class="inputs-form" id="p_phone" type="text" name="p_phone" placeholder="Phone Number">
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<input  class="inputs-form" id="p_dob" type="date" name="p_dob" placeholder="DOB">
+				</div>
+				<div class="col-lg-6 col-sm-6">
+					<input  class="inputs-form" id="p_emergency_info" type="text" name="p_emergency_info" placeholder="Emergency Contact Info">
+				</div>
+				<div class="check-box nres"><input class="cb3" id="check-p" type="checkbox"> <label for="check-p" class="text-keep accept-trms">I have accept the <a href="#">terms & conditions</a></label> </div>
+
+				<div class="text-center mt-5"><button type="button" class="sign-up btn primary-btn">Sign Up Now</button></div>
 			</div>
 		</div>
 
@@ -282,17 +319,22 @@
 
 
 
-		<div id="org-form" style="display:none">
-			<div> Signup as an Organization <br> Already have an account ? <a href="<?= BASE_URL ?>login">Login</a>
+		<div class="width-same-form" id="org-form" style="display:nonee">
+			<div class="round-img">
+				<img src="http://ayan/hwbz/assets//images/hos-1.png" alt="">
 			</div>
-			<div>
-				<input id="o_username" type="text" name="o_username" placeholder="User Name">
-				<input id="o_email" type="email" name="o_email" placeholder="Email">
-				<input id="o_password" type="password" name="o_password" placeholder="Password">
-				<input id="o_cpassword" type="password" name="o_cpassword" placeholder="Confirm Password">
-				<input id="o_fname" type="text" name="o_fname" placeholder="First Name">
-				<input id="o_lname" type="text" name="o_lname" placeholder="Last Name">
-				<select name="o_org_type" id="o_org_type">
+			<h2 class="normal-header text-center"> Sign Up as a <span class="bg-blues">Organization</span></h2>
+			<p class="accout top-text login-top text-center"> Already have an account ? <a class="logincls" href="<?= BASE_URL ?>login">Login</a></p>
+			<!-- <div> Signup as an Organization <br> Already have an account ? <a href="<?= BASE_URL ?>login">Login</a></div> -->
+			<div class="row">
+			<div class="col-lg-6 col-sm-6"><input class="inputs-form" id="o_username" type="text" name="o_username" placeholder="User Name"></div>
+			<div class="col-lg-6 col-sm-6"><input class="inputs-form" id="o_email" type="email" name="o_email" placeholder="Email"></div>
+			<div class="col-lg-6 col-sm-6"><input class="inputs-form" id="o_password" type="password" name="o_password" placeholder="Password"></div>
+			<div class="col-lg-6 col-sm-6"><input class="inputs-form" id="o_cpassword" type="password" name="o_cpassword" placeholder="Confirm Password"></div>
+			<div class="col-lg-6 col-sm-6"><input class="inputs-form" id="o_fname" type="text" name="o_fname" placeholder="First Name"></div>
+			<div class="col-lg-6 col-sm-6"><input class="inputs-form" id="o_lname" type="text" name="o_lname" placeholder="Last Name"></div>
+			<div class="col-lg-6 col-sm-6">
+				<select class="inputs-form" name="o_org_type" id="o_org_type">
 					<option value="0" selected>Organization Type</option>
 					<?php
 					if (!empty($ss_types)) {
@@ -304,10 +346,12 @@
 					}
 					?>
 				</select>
-				<input id="o_org_name" type="text" name="o_org_name" placeholder="Organization Name">
-				<input id="o_address" type="text" name="o_address" placeholder="Street Address">
-				<input id="o_city" type="text" name="o_city" placeholder="City">
-				<select name="o_state" id="o_state">
+			</div>
+			<div class="col-lg-6 col-sm-6"><input class="inputs-form" id="o_org_name" type="text" name="o_org_name" placeholder="Organization Name"></div>
+			<div class="col-lg-12"><input class="inputs-form" id="o_address" type="text" name="o_address" placeholder="Street Address"></div>
+			<div class="col-lg-6 col-sm-6"><input class="inputs-form" id="o_city" type="text" name="o_city" placeholder="City"></div>
+			<div class="col-lg-6 col-sm-6">
+				<select name="o_state" class="inputs-form" id="o_state">
 					<option value="0" selected>State</option>
 					<?php
 					if (!empty($all_usa_states)) {
@@ -319,9 +363,11 @@
 					}
 					?>
 				</select>
-				<input id="o_zip" type="text" name="o_zip" placeholder="ZIP">
-				<input id="o_phone" type="text" name="o_phone" placeholder="Phone Number">
-				<div><button type="button" class="sign-up">Sign Up Now</button></div>
+			</div>
+			<div class="col-lg-6 col-sm-6"><input class="inputs-form" id="o_zip" type="text" name="o_zip" placeholder="ZIP"></div>
+			<div class="col-lg-6 col-sm-6"><input class="inputs-form" id="o_phone" type="text" name="o_phone" placeholder="Phone Number"></div>
+			<div class="check-box nres"><input class="cb3" id="check-pl" type="checkbox"> <label for="check-pl" class="text-keep accept-trms">I have accept the <a href="#">terms & conditions</a></label> </div>	
+			<div class="text-center mt-5"><button type="button" class="sign-up btn primary-btn">Sign Up Now</button></div>
 			</div>
 		</div>
 		</div>

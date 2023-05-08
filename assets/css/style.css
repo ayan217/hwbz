@@ -871,3 +871,99 @@ font-weight: bold;
   margin-bottom: 10px;
   margin-top: 15px;
 }
+
+
+
+/*-------Rishav 08-05-23----------*/
+.width-same-form {
+  width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.round-img {
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  background: #f8f8f8;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 26px;
+}
+.round-img img {
+  width: 135px;
+}
+.accept-trms a{
+  font-family: unset;
+  color: #0c5166;
+}
+
+/*--------Faq Start=====
+========-------------------*/
+.card-cstm-dsgn {
+    border-radius: 8px;
+    border: 1px solid #f6f6f6;
+}
+.card-cstm-dsgn:not(:last-child){
+    margin-bottom: 20px;
+}
+.card-cstm-dsgn .card-header {
+    border-bottom: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background: #f6f6f6;
+    padding: 0.5rem 1.25rem;
+    position: relative;
+}
+.card-cstm-dsgn .card-header h5 button{
+    width: 100%;
+    text-align: left;
+    color: #35b1ff;
+    text-decoration: none;
+    /* font-family:"Rubik-mid"; */
+    font-size: 20px;
+    position: relative;
+    display: block;
+    padding-left: 0;
+}
+.card-cstm-dsgn .card-header.collapsed h5 button{
+    color: var(--primary-bg);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    transition: 0.3s ease-in-out;
+}
+.card-cstm-dsgn .card-header.collapsed h5 button:hover {
+    color: var(--primay-bg);
+}
+.card-cstm-dsgn .card-header.collapsed {
+    border-radius: 8px;
+    transition: 0.8s ease-in-out;
+}
+.body-card-txt {
+    color: var(--content-bg);
+}
+.card-cstm-dsgn .collapsed{
+    color: var(--secondery-bg);
+}
+.accordion-title:before {
+    position: absolute;
+    /* font-family: FontAwesome; */
+    /* content:"\f068"; */
+    content:url(../images/plus2.png);
+    padding-right: 5px;
+    right: 25px;
+    top: 16px;
+}
+.accordion-title.collapsed:before {
+    content:url(../images/plus.png);
+    right: 25px;
+    top: 22px;
+    position: absolute;
+}
+.faq-section.section {
+    padding: 5%;
+}
+.faq-all {
+    width: 84%;
+    margin: auto;
+}

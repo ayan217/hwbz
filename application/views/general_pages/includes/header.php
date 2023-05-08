@@ -16,10 +16,18 @@
 	<link rel="stylesheet" href="<?= ASSET_URL ?>templete/vendors/simple-line-icons/css/simple-line-icons.css">
 	<link rel="stylesheet" href="<?= ASSET_URL ?>templete/vendors/css/vendor.bundle.base.css">
 	<link rel="stylesheet" href="<?= ASSET_URL ?>templete/css/vertical-layout-light/style.css">
+	<link rel="stylesheet" href="<?= ASSET_URL ?>/bootstrap/css/style.css">
 	<link rel="stylesheet" href="<?= ASSET_URL ?>/css/style.css">
 	<link rel="stylesheet" href="<?= ASSET_URL ?>fontawesome/css/all.min.css">
 	<link rel="stylesheet" href="<?= ASSET_URL ?>/css/responsive.css">
 	<!-- endinject -->
+
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
+
+
+
+
+
 	<script src="<?= ASSET_URL . 'js/jquery-3.6.4.min.js' ?>"></script>
 </head>
 
