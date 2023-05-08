@@ -35,8 +35,8 @@
 					</div>
 					<div class="navbtns-maindiv d-flex ">
 						<div class="navbtns"><a href="<?= BASE_URL ?>about" class="navlinks">About</a></div>
-						<div class="navbtns"><a href="#" class="navlinks">Faq's</a></div>
-						<div class="navbtns"><a href="#" class="navlinks">Contact</a></div>
+						<div class="navbtns"><a href="<?= BASE_URL ?>faq" class="navlinks">Faq's</a></div>
+						<div class="navbtns"><a href="<?= BASE_URL ?>contact-us" class="navlinks">Contact</a></div>
 						<div class="navbtns"><a href="login" class="navlinks">Login</a></div>
 						<div class="navbtns signup"><a href="signup" class="navlinks primary-btn">Sign Up</a></div>
 					</div>

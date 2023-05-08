@@ -16,6 +16,20 @@ class Home extends CI_Controller
 		$data['title'] = 'HWBZ About';
 		$this->load->view('layout', $data);
 	}
+	public function contact_us()
+	{
+		$data['folder'] = 'general_pages';
+		$data['template'] = 'contact_us';
+		$data['title'] = 'HWBZ Contact Us';
+		$this->load->view('layout', $data);
+	}
+	public function faq()
+	{
+		$data['folder'] = 'general_pages';
+		$data['template'] = 'faq';
+		$data['title'] = 'HWBZ FAQ';
+		$this->load->view('layout', $data);
+	}
 	public function signup()
 	{
 		if ($this->input->post()) {

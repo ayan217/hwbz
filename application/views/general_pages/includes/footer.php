@@ -21,7 +21,7 @@
                         <a href="<?= BASE_URL ?>" class="link-footer">Home</a>
                         <a href="<?= BASE_URL ?>about" class="link-footer">About</a>
                         <a href="<?= BASE_URL ?>faq" class="link-footer">FAQ's</a>
-                        <a href="<?= BASE_URL ?>contact" class="link-footer">Contact</a>
+                        <a href="<?= BASE_URL ?>contact-us" class="link-footer">Contact</a>
                     </div>
                 </div>
                 <div class="widthphone col-lg-3 col-sm-3">

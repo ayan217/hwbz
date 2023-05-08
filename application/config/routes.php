@@ -58,6 +58,8 @@ $route['thank-you'] = 'Home/thankyou';
 $route['login'] = 'Home/login';
 $route['logout'] = 'Home/logout';
 $route['about'] = 'Home/about';
+$route['contact-us'] = 'Home/contact_us';
+$route['faq'] = 'Home/faq';
 //general pages
 //ss pages
 $route['ss'] = 'ss/Dashboard';
